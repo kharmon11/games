@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Games</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+
+<div>
+    <div class="game-link">
+        <div>
+            <a href="{{ url_for('tictactoe') }}">
+                <svg viewBox="0 0 100 100" class="icon tictactoe" role="img">
+                    <line x1="33" y1="0" x2="33" y2="100" class="tictactoe-line"></line>
+                    <line x1="66" y1="0" x2="66" y2="100" class="tictactoe-line"></line>
+                    <line x1="0" y1="33" x2="100" y2="33" class="tictactoe-line"></line>
+                    <line x1="0" y1="66" x2="100" y2="66" class="tictactoe-line"></line>
+                    <circle cx="50" cy="50" r="13" class="tictactoe-circle"></circle>
+                    <line x1="3" y1="3" x2="30" y2="30" class="tictactoe-cross"></line>
+                    <line x1="30" y1="3" x2="3" y2="30" class="tictactoe-cross"></line>
+                    <line x1="3" y1="3" x2="30" y2="30" class="tictactoe-cross"></line>
+                    <line x1="69" y1="36" x2="96" y2="63" class="tictactoe-cross"></line>
+                    <line x1="96" y1="36" x2="69" y2="63" class="tictactoe-cross"></line>
+                </svg>
+            </a>
+        </div>
+        <div>
+            <a href="{{ url_for('tictactoe') }}">TicTacToe</a>
+        </div>
+    </div>
+    <div class="game-link">
+        <div id="blackjack_img" class="icon">
+            <a href="{{ url_for('blackjack') }}">
+                <img id="ace_hearts" src="{{ url_for('static', filename='img/cards/h01.bmp') }}">
+                <img id="jack_spades" src="{{ url_for('static', filename='img/cards/s11.bmp') }}">
+            </a>
+        </div>
+        <div>
+            <a href="{{ url_for('blackjack') }}">BlackJack</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+.wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.message-win {
+    background-color: #afa;
+    color: #000;
+}
+
+.message-draw {
+    background-color: #ff6;
+    color: #000;
+}
+
+.message-loss {
+    background-color: #faa;
+    color: #000;
+}
+
+#main {
+    width: 100%;
+}
+
+#restart_btn {
+    background-color: #b00;
+    font-size: 20px;
+    padding: 5px 30px 5px 30px;
+    border: 3px solid #000;
+    border-radius: 10px;
+
+    color: #fff;
+}
+
+#restart_btn:hover {
+    background-color: #800;
+}
+
+#message {
+    font-size: 20px;
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+}
+
+#board_wrapper {
+    position: relative;
+    margin: auto;
+    width: 600px;
+    height: 600px;
+}
+
+#board {
+    width: 100%;
+    height: 100%;
+}
