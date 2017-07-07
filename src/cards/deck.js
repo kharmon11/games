@@ -8,20 +8,19 @@ class Deck {
         let i, j;
         for (i = 0; i < this.ranks.length; i++) {
             for (j = 0; j < this.suits.length; j++) {
-                this.cards.push(Card(rank[i], suit[j]));
+                this.cards.push(new Card(this.ranks[i], this.suits[j]));
             }
         }
     }
 
-    shuffle(deck) {
+    shuffle() {
         let i, j, temp;
-        for (i = deck.length - 1; i > 0; i--) {
+        for (i = this.cards.length - 1; i > 0; i--) {
             j = Math.floor(Math.random() * (i + 1));
-            temp = deck[i];
-            deck[i] = deck[j];
-            deck[j] = temp;
+            temp = this.cards[i];
+            this.cards[i] = this.cards[j];
+            this.cards[j] = temp;
         }
-        return deck;
     }
 }
 export default Deck;

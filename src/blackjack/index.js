@@ -1,4 +1,6 @@
 import Deck from '../cards/deck';
 
-const deck = Deck();
-console.log(deck);
+const deck = new Deck();
+console.log(deck.cards);
+deck.shuffle();
+console.log(deck.cards);

@@ -81,8 +81,10 @@ var _deck2 = _interopRequireDefault(_deck);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var deck = (0, _deck2.default)();
-console.log(deck);
+var deck = new _deck2.default();
+console.log(deck.cards);
+deck.shuffle();
+console.log(deck.cards);
 
 /***/ }),
 /* 6 */
@@ -116,24 +118,23 @@ var Deck = function () {
             j = void 0;
         for (i = 0; i < this.ranks.length; i++) {
             for (j = 0; j < this.suits.length; j++) {
-                this.cards.push((0, _card2.default)(rank[i], suit[j]));
+                this.cards.push(new _card2.default(this.ranks[i], this.suits[j]));
             }
         }
     }
 
     _createClass(Deck, [{
         key: "shuffle",
-        value: function shuffle(deck) {
+        value: function shuffle() {
             var i = void 0,
                 j = void 0,
                 temp = void 0;
-            for (i = deck.length - 1; i > 0; i--) {
+            for (i = this.cards.length - 1; i > 0; i--) {
                 j = Math.floor(Math.random() * (i + 1));
-                temp = deck[i];
-                deck[i] = deck[j];
-                deck[j] = temp;
+                temp = this.cards[i];
+                this.cards[i] = this.cards[j];
+                this.cards[j] = temp;
             }
-            return deck;
         }
     }]);
 
