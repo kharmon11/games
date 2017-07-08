@@ -63,28 +63,63 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 6:
+/******/ ([
+/* 0 */,
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _deck = __webpack_require__(7);
+var _game = __webpack_require__(7);
+
+var _game2 = _interopRequireDefault(_game);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var dealBtn = document.getElementById('deal_btn');
+function deal() {
+    dealBtn.style.display = 'none';
+    var game = new _game2.default();
+}
+dealBtn.addEventListener('click', deal);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _deck = __webpack_require__(8);
 
 var _deck2 = _interopRequireDefault(_deck);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var deck = new _deck2.default();
-console.log(deck.cards);
-deck.shuffle();
-console.log(deck.cards);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Game = function Game() {
+    _classCallCheck(this, Game);
+
+    this.deck = new _deck2.default();
+    this.deck.shuffle();
+    this.deckSpot = 0;
+};
+
+exports.default = Game;
 
 /***/ }),
-
-/***/ 7:
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96,7 +131,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _card = __webpack_require__(8);
+var _card = __webpack_require__(9);
 
 var _card2 = _interopRequireDefault(_card);
 
@@ -141,8 +176,7 @@ var Deck = function () {
 exports.default = Deck;
 
 /***/ }),
-
-/***/ 8:
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -165,6 +199,5 @@ var Card = function Card(rank, suit) {
 exports.default = Card;
 
 /***/ })
-
-/******/ });
+/******/ ]);
 //# sourceMappingURL=blackjack.js.map

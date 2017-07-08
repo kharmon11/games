@@ -1,6 +1,10 @@
-import Deck from '../cards/deck';
+"use strict";
+import Game from './game';
 
-const deck = new Deck();
-console.log(deck.cards);
-deck.shuffle();
-console.log(deck.cards);
+const dealBtn = document.getElementById('deal_btn');
+function deal() {
+    dealBtn.style.display = 'none';
+    const game = new Game();
+
+}
+dealBtn.addEventListener('click', deal);

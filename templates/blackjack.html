@@ -8,11 +8,14 @@
             <div id="deck" class="dealer-card-div">
                 <img src="{{ url_for('static', filename='img/cards/b1fv.bmp') }}">
             </div>
-            <div id="dealer_card1" class="dealer-card-div"></div>
-            <div id="dealer_card2" class="dealer-card-div"></div>
+            <div id="dealer_card1" class="card-div"></div>
+            <div id="dealer_card2" class="card-div"></div>
         </div>
-        <div id="table_center"></div>
-        <div id="player_side" class="table-side"></div>
+        <div id="table_center"><button id="deal_btn">Deal</button></div>
+        <div id="player_side" class="table-side">
+            <div id="player_card1" class="card-div"></div>
+            <div id="player_card2" class="card-div"></div>
+        </div>
     </div>
 {% endblock %}
 
