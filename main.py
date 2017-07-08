@@ -3,6 +3,7 @@ from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
+
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
@@ -17,7 +18,8 @@ def dated_url_for(endpoint, **values):
             values['q'] = int(os.stat(file_path).st_mtime)
     return url_for(endpoint, **values)
 
-@app.route('/')
+
+@app.route('/', methods=['GET'])
 def index():
     return render_template("index.html")
 
@@ -26,9 +28,11 @@ def index():
 def tictactoe():
     return render_template("tictactoe.html")
 
+
 @app.route('/blackjack', methods=['GET'])
 def blackjack():
     return render_template("blackjack.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)

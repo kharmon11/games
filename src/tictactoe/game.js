@@ -1,4 +1,5 @@
 import {randInt} from '../utils/randInt';
+import {displayScores} from './displayScores';
 import {wins} from './data/wins';
 
 class TicTacToe {
@@ -91,9 +92,9 @@ class TicTacToe {
 
     findSpaceDimension(coord) {
         return new Promise((resolve, reject) => {
-            if (coord < 200) {
+            if (coord < 100) {
                 resolve(0);
-            } else if (coord > 200 && coord < 400) {
+            } else if (coord > 100 && coord < 200) {
                 resolve(1);
             } else {
                 resolve(2);
@@ -254,22 +255,26 @@ class TicTacToe {
         if (winner === 0) {
             message.innerHTML = 'Draw!';
             message.className = "message-draw";
+            localStorage.draws++;
         } else if (winner === 1) {
             message.innerHTML = 'You Win!';
             message.className = "message-win";
+            localStorage.wins++;
         } else {
             message.innerHTML = 'You Lose!';
             message.className = "message-loss";
+            localStorage.losses++;
         }
+        displayScores();
         this.canvas.removeEventListener("click", this.click);
     }
 
     drawX(dims) {
         return new Promise((resolve, reject) => {
-            const topX = (dims.x * 200) + (200 * 0.05);
-            const botX = (dims.x * 200) + (200 * 0.95);
-            const leftY = (dims.y * 200) + (200 * 0.05);
-            const rightY = (dims.y * 200) + (200 * 0.95);
+            const topX = (dims.x * 100) + (100 * 0.05);
+            const botX = (dims.x * 100) + (100 * 0.95);
+            const leftY = (dims.y * 100) + (100 * 0.05);
+            const rightY = (dims.y * 100) + (100 * 0.95);
 
             this.ctx.beginPath();
             this.ctx.strokeStyle = "#f00";
@@ -289,7 +294,7 @@ class TicTacToe {
             this.ctx.beginPath();
             this.ctx.strokeStyle = "#00f";
             this.ctx.lineWidth = 5;
-            this.ctx.arc((dims.x * 200) + (200 * 0.5), (dims.y * 200) + (200 * 0.5), 90, 0, 2 * Math.PI, false);
+            this.ctx.arc((dims.x * 100) + (100 * 0.5), (dims.y * 100) + (100 * 0.5), 45, 0, 2 * Math.PI, false);
             this.ctx.stroke();
             this.turn++;
             resolve();

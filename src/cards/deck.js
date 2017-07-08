@@ -3,7 +3,7 @@ import Card from './card';
 class Deck {
     constructor() {
         this.ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-        this.suits = ["clubs", "spades", "diamonds", "hearts"];
+        this.suits = ["c", "s", "d", "h"];
         this.cards = [];
         let i, j;
         for (i = 0; i < this.ranks.length; i++) {

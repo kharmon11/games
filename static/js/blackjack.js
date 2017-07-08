@@ -60,22 +60,18 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */
+/******/ ({
+
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _deck = __webpack_require__(6);
+var _deck = __webpack_require__(7);
 
 var _deck2 = _interopRequireDefault(_deck);
 
@@ -87,7 +83,8 @@ deck.shuffle();
 console.log(deck.cards);
 
 /***/ }),
-/* 6 */
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99,7 +96,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _card = __webpack_require__(7);
+var _card = __webpack_require__(8);
 
 var _card2 = _interopRequireDefault(_card);
 
@@ -112,7 +109,7 @@ var Deck = function () {
         _classCallCheck(this, Deck);
 
         this.ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-        this.suits = ["clubs", "spades", "diamonds", "hearts"];
+        this.suits = ["c", "s", "d", "h"];
         this.cards = [];
         var i = void 0,
             j = void 0;
@@ -144,7 +141,8 @@ var Deck = function () {
 exports.default = Deck;
 
 /***/ }),
-/* 7 */
+
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -161,10 +159,12 @@ var Card = function Card(rank, suit) {
 
     this.rank = rank;
     this.suit = suit;
+    this.img = "{{ url_for('static', filename='" + this.suit + this.rank + ".bmp') }}";
 };
 
 exports.default = Card;
 
 /***/ })
-/******/ ]);
+
+/******/ });
 //# sourceMappingURL=blackjack.js.map

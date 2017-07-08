@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,24 +70,16 @@
 "use strict";
 
 
-var _drawBoard = __webpack_require__(1);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var displayScores = function displayScores() {
+    document.getElementById("wins_score").innerHTML = localStorage.wins;
+    document.getElementById("losses_score").innerHTML = localStorage.losses;
+    document.getElementById("draws_score").innerHTML = localStorage.draws;
+};
 
-var _game = __webpack_require__(2);
-
-var _game2 = _interopRequireDefault(_game);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var boardCanvas = document.getElementById("board");
-var ctx = boardCanvas.getContext("2d");
-(0, _drawBoard.drawBoard)(boardCanvas, ctx);
-var game = new _game2.default(boardCanvas, ctx);
-game.start();
-
-function restartGame(event) {
-    location.reload();
-}
-document.getElementById("restart_btn").addEventListener("click", restartGame);
+exports.displayScores = displayScores;
 
 /***/ }),
 /* 1 */
@@ -96,25 +88,39 @@ document.getElementById("restart_btn").addEventListener("click", restartGame);
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var drawBoard = function drawBoard(boardCanvas, ctx) {
-    var size = [boardCanvas.offsetWidth / 3, boardCanvas.offsetWidth * (2 / 3), boardCanvas.offsetWidth];
-    ctx.beginPath();
-    ctx.fillStyle = "#000";
-    ctx.lineWidth = 10;
-    ctx.moveTo(size[0], 0);
-    ctx.lineTo(size[0], size[2]);
-    ctx.moveTo(size[1], 0);
-    ctx.lineTo(size[1], size[2]);
-    ctx.moveTo(0, size[0]);
-    ctx.lineTo(size[2], size[0]);
-    ctx.moveTo(0, size[1]);
-    ctx.lineTo(size[2], size[1]);
-    ctx.stroke();
-};
-exports.drawBoard = drawBoard;
+var _drawBoard = __webpack_require__(2);
+
+var _displayScores = __webpack_require__(0);
+
+var _game = __webpack_require__(3);
+
+var _game2 = _interopRequireDefault(_game);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var boardCanvas = document.getElementById("board");
+var ctx = boardCanvas.getContext("2d");
+(0, _drawBoard.drawBoard)(boardCanvas, ctx);
+
+if (typeof Storage !== "undefined") {
+    if (localStorage.record) {
+        (0, _displayScores.displayScores)();
+    } else {
+        localStorage.record = true;
+        localStorage.setItem("wins", 0);
+        localStorage.setItem("losses", 0);
+        localStorage.setItem("draws", 0);
+        (0, _displayScores.displayScores)();
+    }
+}
+
+var game = new _game2.default(boardCanvas, ctx);
+game.start();
+
+function restartGame(event) {
+    location.reload();
+}
+document.getElementById("restart_btn").addEventListener("click", restartGame);
 
 /***/ }),
 /* 2 */
@@ -126,12 +132,40 @@ exports.drawBoard = drawBoard;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var drawBoard = function drawBoard(boardCanvas, ctx) {
+    ctx.beginPath();
+    ctx.fillStyle = "#000";
+    ctx.lineWidth = 10;
+    ctx.moveTo(100, 0);
+    ctx.lineTo(100, 300);
+    ctx.moveTo(200, 0);
+    ctx.lineTo(200, 300);
+    ctx.moveTo(0, 100);
+    ctx.lineTo(300, 100);
+    ctx.moveTo(0, 200);
+    ctx.lineTo(300, 200);
+    ctx.stroke();
+};
+exports.drawBoard = drawBoard;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _randInt = __webpack_require__(3);
+var _randInt = __webpack_require__(4);
 
-var _wins = __webpack_require__(4);
+var _displayScores = __webpack_require__(0);
+
+var _wins = __webpack_require__(5);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -230,9 +264,9 @@ var TicTacToe = function () {
         key: 'findSpaceDimension',
         value: function findSpaceDimension(coord) {
             return new Promise(function (resolve, reject) {
-                if (coord < 200) {
+                if (coord < 100) {
                     resolve(0);
-                } else if (coord > 200 && coord < 400) {
+                } else if (coord > 100 && coord < 200) {
                     resolve(1);
                 } else {
                     resolve(2);
@@ -411,13 +445,17 @@ var TicTacToe = function () {
             if (winner === 0) {
                 message.innerHTML = 'Draw!';
                 message.className = "message-draw";
+                localStorage.draws++;
             } else if (winner === 1) {
                 message.innerHTML = 'You Win!';
                 message.className = "message-win";
+                localStorage.wins++;
             } else {
                 message.innerHTML = 'You Lose!';
                 message.className = "message-loss";
+                localStorage.losses++;
             }
+            (0, _displayScores.displayScores)();
             this.canvas.removeEventListener("click", this.click);
         }
     }, {
@@ -426,10 +464,10 @@ var TicTacToe = function () {
             var _this9 = this;
 
             return new Promise(function (resolve, reject) {
-                var topX = dims.x * 200 + 200 * 0.05;
-                var botX = dims.x * 200 + 200 * 0.95;
-                var leftY = dims.y * 200 + 200 * 0.05;
-                var rightY = dims.y * 200 + 200 * 0.95;
+                var topX = dims.x * 100 + 100 * 0.05;
+                var botX = dims.x * 100 + 100 * 0.95;
+                var leftY = dims.y * 100 + 100 * 0.05;
+                var rightY = dims.y * 100 + 100 * 0.95;
 
                 _this9.ctx.beginPath();
                 _this9.ctx.strokeStyle = "#f00";
@@ -452,7 +490,7 @@ var TicTacToe = function () {
                 _this10.ctx.beginPath();
                 _this10.ctx.strokeStyle = "#00f";
                 _this10.ctx.lineWidth = 5;
-                _this10.ctx.arc(dims.x * 200 + 200 * 0.5, dims.y * 200 + 200 * 0.5, 90, 0, 2 * Math.PI, false);
+                _this10.ctx.arc(dims.x * 100 + 100 * 0.5, dims.y * 100 + 100 * 0.5, 45, 0, 2 * Math.PI, false);
                 _this10.ctx.stroke();
                 _this10.turn++;
                 resolve();
@@ -466,7 +504,7 @@ var TicTacToe = function () {
 exports.default = TicTacToe;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -486,7 +524,7 @@ var randInt = function randInt(min, max) {
 exports.randInt = randInt;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
