@@ -3,6 +3,17 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blackjack.css') }}">{% endblock %}
 {% block content %}
+    <div id="main">
+        <div id="dealer_side" class="table-side">
+            <div id="deck" class="dealer-card-div">
+                <img src="{{ url_for('static', filename='img/cards/b1fv.bmp') }}">
+            </div>
+            <div id="dealer_card1" class="dealer-card-div"></div>
+            <div id="dealer_card2" class="dealer-card-div"></div>
+        </div>
+        <div id="table_center"></div>
+        <div id="player_side" class="table-side"></div>
+    </div>
 {% endblock %}
 
 {% block js %}
