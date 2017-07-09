@@ -4,17 +4,26 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blackjack.css') }}">{% endblock %}
 {% block content %}
     <div id="main">
-        <div id="dealer_side" class="table-side">
-            <div id="deck" class="dealer-card-div">
-                <img src="{{ url_for('static', filename='img/cards/b1fv.bmp') }}">
+        <div id="dealer_side" class="table-section">
+            <div id="dealer_row">
+                <div id="deck" class="dealer-card-div">
+                    <img src="{{ url_for('static', filename='img/cards/b1fv.bmp') }}">
+                </div>
+                <div id="dealer_cards" class="dealer-side-div">
+                    <div id="dealer_card1" class="dealer-card-div"></div>
+                    <div id="dealer_card2" class="dealer-card-div"></div>
+                </div>
             </div>
-            <div id="dealer_card1" class="card-div"></div>
-            <div id="dealer_card2" class="card-div"></div>
         </div>
-        <div id="table_center"><button id="deal_btn">Deal</button></div>
-        <div id="player_side" class="table-side">
-            <div id="player_card1" class="card-div"></div>
-            <div id="player_card2" class="card-div"></div>
+        <div id="table_center" class="table-section">
+            <button id="deal_btn">Deal</button>
+        </div>
+        <div id="player_side" class="table-section">
+            <div id="player_cards">
+                <div id="player_card1" class="player-card-div"></div>
+                <div id="player_card2" class="player-card-div"></div>
+            </div>
+            <div id="player_console" class="table-section"></div>
         </div>
     </div>
 {% endblock %}

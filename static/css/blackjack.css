@@ -1,40 +1,49 @@
-.table-side {
-    display: flex;
-    justify-content: center;
-    width: 300px;
+.table-section {
     margin: auto;
+    min-height: 150px;
 }
 
-.card-div {
+.dealer-side-div {
     display: inline-block;
-    margin: 10px;
-    align-self: center;
-    width: 80px;
-    height: 105px;
+    width: 40%;
+}
+
+.dealer-card-div {
+    display: inline-block;
+    margin: -2px;
+}
+
+.player-card-div {
+    display: inline-block;
 }
 
 #main {
     background-color: #0a0;
     width: 100%;
     height: 100%;
-
 }
 
 #dealer_side {
     padding-top: 20px;
 }
 
-#table_center {
-    height: 200px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+#dealer_row {
+    width: 70%;
+    margin-left: auto;
+}
+
+#deck {
+}
+
+#dealer_cards {
+    margin-left: 70px;
 }
 
 #deal_btn {
     background-color: #00f;
     color: #fff;
     font-size: 30px;
+    margin-left: 30%;
     padding: 5px 10px 5px 10px;
     border: 3px solid #fff;
     border-radius: 5px;
@@ -45,4 +54,12 @@
 #deal_btn:hover {
     background-color: #00a;
     cursor: pointer;
+}
+
+#player_side {
+}
+
+#player_cards {
+    max-width: 60%;
+    margin-left: auto;
 }
