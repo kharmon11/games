@@ -74,9 +74,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var displayScores = function displayScores() {
-    document.getElementById("wins_score").innerHTML = localStorage.wins;
-    document.getElementById("losses_score").innerHTML = localStorage.losses;
-    document.getElementById("draws_score").innerHTML = localStorage.draws;
+    document.getElementById("wins_score").innerHTML = localStorage.tictactoeWins;
+    document.getElementById("losses_score").innerHTML = localStorage.tictactoeLosses;
+    document.getElementById("draws_score").innerHTML = localStorage.tictactoeDraws;
 };
 
 exports.displayScores = displayScores;
@@ -104,12 +104,20 @@ var ctx = boardCanvas.getContext("2d");
 
 if (typeof Storage !== "undefined") {
     if (localStorage.record) {
+        if (localStorage.wins) {
+            localStorage.setItem("tictactoeWins", localStorage.wins);
+            localStorage.setItem("tictactoeLosses", localStorage.losses);
+            localStorage.setItem("tictactoeDraws", localStorage.draws);
+            localStorage.removeItem("wins");
+            localStorage.removeItem("losses");
+            localStorage.removeItem("draws");
+        }
         (0, _displayScores.displayScores)();
     } else {
         localStorage.record = true;
-        localStorage.setItem("wins", 0);
-        localStorage.setItem("losses", 0);
-        localStorage.setItem("draws", 0);
+        localStorage.setItem("tictactoeWins", 0);
+        localStorage.setItem("tictactoeLosses", 0);
+        localStorage.setItem("tictactoeDraws", 0);
         (0, _displayScores.displayScores)();
     }
 }
