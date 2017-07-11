@@ -72,12 +72,9 @@ class Game {
     }
 
     hit() {
-        console.log("hit");
         this.addCard(this.playerHand, this.deck.cards[this.deckSpot]).then(() => {
-            console.log("add");
             return this.playerHand.calcScore();
         }).then(() => {
-            console.log(this.playerHand.score);
             this.displayScore();
             const playerCards = document.getElementById("player_cards");
             const hand = this.playerHand.cards;
