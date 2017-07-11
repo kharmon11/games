@@ -2,7 +2,57 @@
 {% block title %}BlackJack{% endblock %}
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blackjack.css') }}">{% endblock %}
+{% block game %}BlackJack{% endblock %}
 {% block content %}
+    <div id="main">
+        <div id="dealer_side" class="table-section">
+            <div id="dealer_row">
+                <div id="deck" class="dealer-card-div">
+                    <img src="{{ url_for('static', filename='img/cards/b1fv.bmp') }}">
+                </div>
+                <div id="dealer_score" class="yellow-font"></div>
+                <div id="dealer_cards" class="dealer-side-div">
+                    <div id="dealer_card1" class="dealer-card-div card-div"></div>
+                    <div id="dealer_card2" class="dealer-card-div card-div"></div>
+                </div>
+            </div>
+        </div>
+        <div id="table_center" class="table-section">
+            <div id="score_section" class="section">
+                <div id="score_title">YOUR RECORD</div>
+                <div id="scoreboard">
+                    <div id="wins" class="score-display">
+                        <div id="wins_title" class="scoreboard-titles">WINS</div>
+                        <div id="wins_score" class="scores"></div>
+                    </div>
+                    <div id="losses" class="score-display">
+                        <div id="losses_title" class="scoreboard-titles">LOSSES</div>
+                        <div id="losses_score" class="scores"></div>
+                    </div>
+                    <div id="draws" class="score-display">
+                        <div id="draws_title" class="scoreboard-titles">DRAWS</div>
+                        <div id="draws_score" class="scores"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="game_result" class="yellow-font"></div>
+        </div>
+        <div id="player_side" class="table-section">
+            <div id="player_cards">
+                <div id="player_running_score" class="yellow-font"></div>
+                <div id="player_card1" class="player-card-div card-div"></div>
+                <div id="player_card2" class="player-card-div card-div"></div>
+            </div>
+        </div>
+        <div id="player_console" class="table-section">
+            <div id="player_console_btn_wrapper">
+                <button id="hit_btn" class="player-console-btn">HIT</button>
+                <button id="stay_btn" class="player-console-btn">STAY</button>
+                <button id="deal_btn" class="large-btn">Deal</button>
+                <button id="restart_btn" class="large-btn">Restart</button>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block js %}
