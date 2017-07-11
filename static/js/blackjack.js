@@ -82,9 +82,26 @@ var _game2 = _interopRequireDefault(_game);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+if (typeof Storage !== "undefined") {
+    if (localStorage.blackjackWins) {
+        document.getElementById("wins_score").innerHTML = localStorage.blackjackWins;
+        document.getElementById("losses_score").innerHTML = localStorage.blackjackLosses;
+        document.getElementById("draws_score").innerHTML = localStorage.blackjackDraws;
+    } else {
+        localStorage.setItem("blackjackWins", 0);
+        localStorage.setItem("blackjackLosses", 0);
+        localStorage.setItem("blackjackDraws", 0);
+    }
+}
+
 var dealBtn = document.getElementById('deal_btn');
 function deal() {
-    dealBtn.style.display = 'none';
+    if (document.getElementById('dealer_card1') !== "") {
+        document.getElementById('dealer_score').innerHTML = "";
+        document.getElementById('game_result').innerHTML = "";
+        document.getElementById('dealer_cards').innerHTML = "<div id='dealer_card1' class='dealer-card-div card-div'></div>" + "<div id='dealer_card2' class='dealer-card-div card-div'></div>";
+        document.getElementById('player_cards').innerHTML = "<div id='player_running_score' class='yellow-font'></div>" + "<div id='player_card1' class='player-card-div card-div'>" + "</div> <div id='player_card2' class='player-card-div card-div'></div>";
+    }
     var game = new _game2.default();
     game.start();
 }
@@ -122,8 +139,6 @@ var Game = function () {
         this.deck = new _deck2.default();
         this.deck.shuffle();
         this.deckSpot = 0;
-        this.dealerHand = [];
-        this.playerHand = [];
         this.dealerCard1 = document.getElementById('dealer_card1');
         this.dealerCard2 = document.getElementById('dealer_card2');
         this.playerCard1 = document.getElementById('player_card1');
@@ -132,23 +147,43 @@ var Game = function () {
         this.dealCards = this.dealCards.bind(this);
         this.showCards = this.showCards.bind(this);
         this.cardImageElement = this.cardImageElement.bind(this);
+        this.displayScore = this.displayScore.bind(this);
+        this.hit = this.hit.bind(this);
+        this.stay = this.stay.bind(this);
+        this.addCard = this.addCard.bind(this);
+        this.dealerTurn = this.dealerTurn.bind(this);
+        this.dealerHit = this.dealerHit.bind(this);
+        this.gameOver = this.gameOver.bind(this);
     }
 
     _createClass(Game, [{
         key: 'start',
         value: function start() {
             this.dealCards();
+            if (this.playerHand.score === 21) {
+                this.stay();
+            }
         }
     }, {
         key: 'dealCards',
         value: function dealCards() {
-            var dealerHand = new _hand2.default([this.deck.cards[0], this.deck.cards[1]], "dealer");
-            dealerHand.calcScore();
-            this.showCards(dealerHand);
-            var playerHand = new _hand2.default([this.deck.cards[2], this.deck.cards[3]], "player");
-            playerHand.calcScore();
-            this.showCards(playerHand);
-            this.deckSpot = 3;
+            var _this = this;
+
+            this.dealerHand = new _hand2.default([this.deck.cards[0], this.deck.cards[1]], "dealer");
+            this.dealerHand.calcScore();
+            this.showCards(this.dealerHand);
+            this.playerHand = new _hand2.default([this.deck.cards[2], this.deck.cards[3]], "player");
+            this.playerHand.calcScore().then(function () {
+                document.getElementById("player_running_score").innerHTML = _this.playerHand.score;
+            });
+            this.showCards(this.playerHand);
+            this.deckSpot = 4;
+            var hitBtn = document.getElementById("hit_btn");
+            var stayBtn = document.getElementById("stay_btn");
+            hitBtn.addEventListener("click", this.hit);
+            hitBtn.style.display = "inline-block";
+            stayBtn.addEventListener("click", this.stay);
+            stayBtn.style.display = "inline-block";
         }
     }, {
         key: 'showCards',
@@ -169,13 +204,124 @@ var Game = function () {
     }, {
         key: 'cardImageElement',
         value: function cardImageElement(card) {
-            var rank = void 0;
-            if (card.rank < 10) {
-                rank = "0" + card.rank;
+            return "<img src='" + card.img + "'>";
+        }
+    }, {
+        key: 'displayScore',
+        value: function displayScore() {
+            document.getElementById("player_running_score").innerHTML = this.playerHand.score;
+        }
+    }, {
+        key: 'hit',
+        value: function hit() {
+            var _this2 = this;
+
+            console.log("hit");
+            this.addCard(this.playerHand, this.deck.cards[this.deckSpot]).then(function () {
+                console.log("add");
+                return _this2.playerHand.calcScore();
+            }).then(function () {
+                console.log(_this2.playerHand.score);
+                _this2.displayScore();
+                var playerCards = document.getElementById("player_cards");
+                var hand = _this2.playerHand.cards;
+                playerCards.innerHTML += "<div id='player_card" + hand.length + "' class='player-card-div card-div'>" + _this2.cardImageElement(hand[hand.length - 1]) + "</div>";
+                if (_this2.playerHand.score > 21) {
+                    _this2.gameOver("loss");
+                }
+            });
+        }
+    }, {
+        key: 'stay',
+        value: function stay() {
+            // document.getElementById("hit_btn").disabled = true;
+            // document.getElementById("stay_btn").disabled = true;
+            this.dealerTurn();
+        }
+    }, {
+        key: 'addCard',
+        value: function addCard(hand, newCard) {
+            var _this3 = this;
+
+            return new Promise(function (resolve, reject) {
+                hand.cards.push(newCard);
+                _this3.deckSpot++;
+                resolve();
+            });
+        }
+    }, {
+        key: 'dealerTurn',
+        value: function dealerTurn() {
+            var _this4 = this;
+
+            var dealerCards = document.getElementById("dealer_cards");
+            var hand = this.dealerHand.cards;
+            dealerCards.innerHTML = "<div class='player-card-div card-div'>" + this.cardImageElement(hand[0]) + "</div><div class='player-card-div card-div'>" + this.cardImageElement(hand[1]) + "</div>";
+            if (this.dealerHand.score < 17 || this.dealerHand.score === 17 && this.aces > 0) {
+                this.dealerHit(dealerCards).then(function (result) {
+                    if (result === "safe") {
+                        _this4.gameOver();
+                    } else {
+                        _this4.gameOver("win");
+                    }
+                });
             } else {
-                rank = card.rank;
+                this.gameOver();
             }
-            return "<img src='static/img/cards/" + card.suit + rank + ".bmp'>";
+        }
+    }, {
+        key: 'dealerHit',
+        value: function dealerHit(dealerCards) {
+            var _this5 = this;
+
+            return new Promise(function (resolve, reject) {
+                _this5.addCard(_this5.dealerHand, _this5.deck.cards[_this5.deckSpot]).then(function () {
+                    _this5.deckSpot++;
+                    dealerCards.innerHTML += "<div class='player-card-div card-div'>" + _this5.cardImageElement(_this5.dealerHand.cards[_this5.dealerHand.cards.length - 1]) + "</div>";
+                    _this5.dealerHand.calcScore().then(function () {
+                        if (_this5.dealerHand.score < 17) {
+                            _this5.dealerHit(dealerCards).then(function (result) {
+                                resolve(result);
+                            });
+                        } else if (_this5.dealerHand.score > 21) {
+                            resolve("bust");
+                        } else {
+                            resolve("safe");
+                        }
+                    });
+                });
+            });
+        }
+    }, {
+        key: 'gameOver',
+        value: function gameOver(condition) {
+            if (condition) {
+                var result = document.getElementById("game_result");
+                if (condition === "win") {
+                    result.innerHTML = "You Win!";
+                    localStorage.blackjackWins++;
+                } else if (condition === "loss") {
+                    result.innerHTML = "You Lose!";
+                    localStorage.blackjackLosses++;
+                } else {
+                    result.innerHTML = "Draw";
+                    localStorage.blackjackDraws++;
+                }
+                document.getElementById("wins_score").innerHTML = localStorage.blackjackWins;
+                document.getElementById("losses_score").innerHTML = localStorage.blackjackLosses;
+                document.getElementById("draws_score").innerHTML = localStorage.blackjackDraws;
+                document.getElementById('hit_btn').removeEventListener('click', this.hit);
+                document.getElementById('stay_btn').removeEventListener('click', this.stay);
+                document.getElementById("dealer_score").innerHTML = this.dealerHand.score;
+            } else {
+                if (this.playerHand.score > this.dealerHand.score) {
+                    this.gameOver("win");
+                } else if (this.playerHand.score < this.dealerHand.score) {
+                    this.gameOver("loss");
+                } else {
+                    this.gameOver("draw");
+                }
+            }
         }
     }]);
 
@@ -259,7 +405,12 @@ var Card = function Card(rank, suit) {
 
     this.rank = rank;
     this.suit = suit;
-    this.img = "{{ url_for('static', filename='" + this.suit + this.rank + ".bmp') }}";
+    this.img = "static/img/cards/";
+    if (rank < 10) {
+        this.img += this.suit + "0" + this.rank + ".bmp";
+    } else {
+        this.img += this.suit + this.rank + ".bmp";
+    }
 };
 
 exports.default = Card;
@@ -301,14 +452,16 @@ var Hand = function () {
             var _this = this;
 
             return new Promise(function (resolve, reject) {
-                var i = void 0;
+                var i = void 0,
+                    j = void 0,
+                    k = void 0;
                 _this.score = 0;
                 for (i = 0; i < _this.cards.length; i++) {
-                    _this.score = _this.score + _this.cardRankConvert();
+                    _this.score = _this.score + _this.cardRankConvert(_this.cards[i]);
                 }
+
                 if (_this.score > 21) {
                     var aces = _this.aces;
-                    var j = void 0;
                     for (j = 0; j < _this.aces; j++) {
                         _this.score = _this.score - 10;
                         aces--;

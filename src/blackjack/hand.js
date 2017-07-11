@@ -14,14 +14,14 @@ class Hand {
 
     calcScore() {
         return new Promise((resolve, reject) => {
-            let i;
+            let i, j, k;
             this.score = 0;
             for (i = 0; i < this.cards.length; i++) {
-                this.score = this.score + this.cardRankConvert();
+                this.score = this.score + this.cardRankConvert(this.cards[i]);
             }
+
             if (this.score > 21) {
                 let aces = this.aces;
-                let j;
                 for (j = 0; j < this.aces; j++) {
                     this.score = this.score - 10;
                     aces--;

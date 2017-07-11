@@ -32,10 +32,21 @@ body {
     height: 100px;
 }
 
+#header_logo {
+    display: inline-block;
+}
+
 #logo {
     height: 100px;
     width: 100px;
 }
 
-#bottom_ace {
+#header_title {
+    color: #fff;
+    font-size: 40px;
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-left: 100px;
+    text-align: center;
 }
