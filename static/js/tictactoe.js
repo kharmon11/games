@@ -442,7 +442,7 @@ var TicTacToe = function () {
             if (winner === 0) {
                 message.innerHTML = 'Draw!';
                 message.className = "message-draw";
-                localStorage.tictacToeDraws++;
+                localStorage.tictactoeDraws++;
             } else if (winner === 1) {
                 message.innerHTML = 'You Win!';
                 message.className = "message-win";
