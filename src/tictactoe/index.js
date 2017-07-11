@@ -8,23 +8,12 @@ const ctx = boardCanvas.getContext("2d");
 drawBoard(boardCanvas, ctx);
 
 if (typeof Storage !== "undefined") {
-    if (localStorage.record) {
-        if (localStorage.wins) {
-            localStorage.setItem("tictactoeWins", localStorage.wins);
-            localStorage.setItem("tictactoeLosses", localStorage.losses);
-            localStorage.setItem("tictactoeDraws", localStorage.draws);
-            localStorage.removeItem("wins") ;
-            localStorage.removeItem("losses");
-            localStorage.removeItem("draws");
-        }
-        displayScores();
-    } else {
-        localStorage.record = true;
+    if (!localStorage.tictactoeWins) {
         localStorage.setItem("tictactoeWins", 0);
         localStorage.setItem("tictactoeLosses", 0);
         localStorage.setItem("tictactoeDraws", 0);
-        displayScores();
     }
+    displayScores();
 }
 
 const game = new Game(boardCanvas, ctx);
