@@ -137,7 +137,6 @@ var preloadCards = function preloadCards() {
         for (j = 0; j < suits.length; j++) {
             var cardImage = new Image();
             cardImage.src = dir + suits[j] + rank + ".bmp";
-            console.log(cardImage.src);
         }
     }
     var extraCards = new Image();
