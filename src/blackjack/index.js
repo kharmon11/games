@@ -1,4 +1,5 @@
 "use strict";
+import {preloadCards} from '../cards/preloadCards';
 import Game from './game';
 
 if (typeof Storage !== "undefined") {
@@ -29,3 +30,5 @@ function deal() {
     game.start();
 }
 dealBtn.addEventListener('click', deal);
+
+preloadCards();
