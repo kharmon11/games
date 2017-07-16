@@ -31,7 +31,7 @@
 
 #ace_hearts {
     display: inline-block;
-    position:absolute;
+    position: absolute;
     top: -10px;
 }
 
@@ -41,4 +41,48 @@
     top: -5px;
     left: 10px;
     transform: rotate(15deg);
+}
+
+#mastermind_base {
+    fill: #48f;
+    stroke: #48f;
+    stroke-width: 1px;
+}
+
+#mastermind-M {
+    font-size: 50px;
+    font-weight: 800;
+    fill: #c60;
+}
+
+#red-peg {
+    fill: #f00;
+}
+
+#purple-peg {
+    fill: #a4a;
+}
+
+#white-peg {
+    fill: #ddd;
+}
+
+#orange-peg {
+    fill: #f90;
+}
+
+#yellow-peg {
+    fill: #ff0;
+}
+
+#blue-peg {
+    fill: #00d;
+}
+
+#black-peg {
+    fill: #000;
+}
+
+#green-peg {
+    fill: #0f0;
 }

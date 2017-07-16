@@ -23,7 +23,7 @@
                     </svg>
                 </a>
             </div>
-            <div>
+            <div class="center-text">
                 <a href="{{ url_for('tictactoe') }}">TicTacToe</a>
             </div>
         </div>
@@ -34,8 +34,30 @@
                     <img id="jack_spades" src="{{ url_for('static', filename='img/cards/s11.bmp') }}">
                 </a>
             </div>
-            <div>
+            <div class="center-text">
                 <a href="{{ url_for('blackjack') }}">BlackJack</a>
+            </div>
+        </div>
+        <div class="game-link" viewBox="0 0 100 100" class="icon tictactoe" role="img">
+            <div>
+                <a href="{{ url_for('mastermind') }}">
+                    <svg class="icon">
+                        <path id="mastermind_base" d="M5 25 A20 20 0 0 1 25 5 H75 A20 20 0 0 1 95 25 V75
+                        A20 20 0 0 1 75 95 H25 A20 20 0 0 1 5 75 Z"></path>
+                        <text id="mastermind-M" x="28" y="65">M</text>
+                        <circle id="red-peg" class="mastermind-peg" cx="17" cy="38" r="8"></circle>
+                        <circle id="purple-peg" class="mastermind-peg" cx="17" cy="58" r="8"></circle>
+                        <circle id="white-peg" class="mastermind-peg" cx="17" cy="78" r="8"></circle>
+                        <circle id="orange-peg" class="mastermind-peg" cx="40" cy="78" r="8"></circle>
+                        <circle id="yellow-peg" class="mastermind-peg" cx="60" cy="78" r="8"></circle>
+                        <circle id="blue-peg" class="mastermind-peg" cx="83" cy="78" r="8"></circle>
+                        <circle id="black-peg" class="mastermind-peg" cx="83" cy="58" r="8"></circle>
+                        <circle id="green-peg" class="mastermind-peg" cx="83" cy="38" r="8"></circle>
+                    </svg>
+                </a>
+            </div>
+            <div class="center-text">
+                <a href="{{ url_for('mastermind') }}">MasterMind</a>
             </div>
         </div>
     </div>

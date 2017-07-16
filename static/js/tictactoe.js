@@ -60,11 +60,31 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// Generate random integer between 'min' and 'max'. 'min' is inclusive while 'max' is exclusive.
+// randInt(1,11) can generate '1' but not '11'
+
+var randInt = function randInt(min, max) {
+  min = Math.floor(min);
+  max = Math.ceil(max);
+  return Math.floor(Math.random() * (max - min) + min);
+};
+exports.randInt = randInt;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82,17 +102,17 @@ var displayScores = function displayScores() {
 exports.displayScores = displayScores;
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _drawBoard = __webpack_require__(2);
+var _drawBoard = __webpack_require__(3);
 
-var _displayScores = __webpack_require__(0);
+var _displayScores = __webpack_require__(1);
 
-var _game = __webpack_require__(3);
+var _game = __webpack_require__(4);
 
 var _game2 = _interopRequireDefault(_game);
 
@@ -131,7 +151,7 @@ function restartGame(event) {
 document.getElementById("restart_btn").addEventListener("click", restartGame);
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -157,7 +177,7 @@ var drawBoard = function drawBoard(boardCanvas, ctx) {
 exports.drawBoard = drawBoard;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -169,9 +189,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _randInt = __webpack_require__(4);
+var _randInt = __webpack_require__(0);
 
-var _displayScores = __webpack_require__(0);
+var _displayScores = __webpack_require__(1);
 
 var _wins = __webpack_require__(5);
 
@@ -510,26 +530,6 @@ var TicTacToe = function () {
 }();
 
 exports.default = TicTacToe;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-// Generate random integer between 'min' and 'max'. 'min' is inclusive while 'max' is exclusive.
-// randInt(1,11) can generate '1' but not '11'
-
-var randInt = function randInt(min, max) {
-  min = Math.floor(min);
-  max = Math.ceil(max);
-  return Math.floor(Math.random() * (max - min) + min);
-};
-exports.randInt = randInt;
 
 /***/ }),
 /* 5 */

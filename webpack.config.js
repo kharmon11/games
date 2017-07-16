@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
     entry: {
         tictactoe: './src/tictactoe/index.js',
-        blackjack: './src/blackjack/index.js'
+        blackjack: './src/blackjack/index.js',
+        mastermind: './src/mastermind/index.js'
     },
     output: {
         filename: 'js/[name].js',

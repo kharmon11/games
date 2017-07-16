@@ -1,0 +1,106 @@
+.info-sub-div {
+    background-color: #333;
+    color: #aa0;
+    border: 3px solid #954;
+    margin: 10px 15px 10px 15px;
+    padding: 10px;
+}
+
+.info-subheader {
+    color: #0a0;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.score-display {
+    text-align: center;
+}
+
+.scoreboard-titles {
+    color: #fff;
+    font-size: 30px;
+}
+
+.scores {
+    color: #f00;
+    font-size: 30px;
+}
+
+#main {
+    background: linear-gradient(to bottom right, #444, #aaa, #888);
+    height: 100%;
+    width: 100%;
+}
+
+#info {
+    flex: 1;
+}
+
+#info li {
+    margin: 5px 0 5px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#game {
+    flex: 1;
+}
+
+#game_container {
+    display: flex;
+}
+
+#board {
+    border: 5px solid #000;
+    display: block;
+    margin: auto;
+    flex: 3;
+}
+
+#game_board {
+    flex: 2;
+}
+
+#score_section {
+    flex: 1;
+}
+
+#new_game_btn {
+    background-color: #00f;
+    color: #fff;
+    font-size: 16px;
+    padding: 3px 8px 3px 8px;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    display: block;
+    margin: auto;
+}
+
+#new_game_btn:hover {
+    background-color: #55f;
+}
+
+#scoreboard {
+    background-color: #000;
+    max-height: 150px;
+    max-width: 150px;
+    border: 10px groove #aaa;
+    border-radius: 5px;
+    margin: auto;
+}
+
+@media screen and (min-width: 800px) {
+    #main {
+        display: flex;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #scoreboard {
+        display: flex;
+    }
+    .score-display {
+        flex: 1;
+    }
+}

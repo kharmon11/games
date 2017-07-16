@@ -2,6 +2,10 @@ body {
     margin: 0;
 }
 
+.center-text {
+    text-align: center;
+}
+
 .logo-circle {
     fill: #336;
 }
@@ -26,6 +30,11 @@ body {
     fill: #f44;
 }
 
+#content {
+    height: 100%;
+    width: 100%;
+}
+
 #header {
     background-color: #999;
     width: 100%;
@@ -47,6 +56,6 @@ body {
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-    margin-left: 100px;
+    margin-left: 20%;
     text-align: center;
 }

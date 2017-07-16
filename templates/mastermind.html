@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}MasterMind{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mastermind.css') }}">{% endblock %}
+{% block game %}MasterMind{% endblock %}
+{% block content %}
+    <div id="main">
+        <div id="game">
+            <div id="game_container">
+                <div id="game_board" class="game-section">
+                    <div>
+                        <button id="new_game_btn">NEW GAME</button>
+                    </div>
+                    <canvas id="board" width="300" height="550"></canvas>
+                </div>
+                <div id="score_section" class="game-section">
+                    <div id="scoreboard">
+                        <div id="wins" class="score-display">
+                            <div id="wins_title" class="scoreboard-titles">W</div>
+                            <div id="wins_score" class="scores"></div>
+                        </div>
+                        <div id="losses" class="score-display">
+                            <div id="losses_title" class="scoreboard-titles">L</div>
+                            <div id="losses_score" class="scores"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="info" class="section">
+            <div id="info_div">
+                <div class="info-sub-div">
+                    <div class="info-subheader">Goal</div>
+                    <ul>
+                        <li>Correctly guess the hidden pattern of colors with a limited number of
+                            guesses.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-sub-div">
+                    <div class="info-subheader">Directions</div>
+                    <ul>
+                        <li>Click a color to select it, then click a spot in guess row to set a color in your guess
+                            sequence.
+                        </li>
+                        <li>The mystery pattern has no duplicates.</li>
+                        <li>Click the "Check" button to evaluate your guess.</li>
+                        <li>Red and white pips will explain how accurate your guess was.</li>
+                        <li>Red: color that was correctly placed in the sequence. White: color that is present, but in
+                            the the incorrect spot.
+                        </li>
+                        <li>Determining which colors in your guess correspond to which pip is up to YOU to figure out.
+                        </li>
+                        <li>Guess the sequence exactly before you run out of opportunities. If you run out of guesses,
+                            you LOSE. Use your guesses wisely!
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{{ url_for('static', filename='js/mastermind.js') }}"></script>{% endblock %}

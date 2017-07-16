@@ -1,7 +1,7 @@
 {
-  "name": "tictactoe",
-  "version": "1.0.0",
-  "description": "Tic-Tac-Toe",
+  "name": "games",
+  "version": "0.2.0",
+  "description": "Games",
   "main": "index.js",
   "scripts": {
     "build": "webpack"

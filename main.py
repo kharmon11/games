@@ -34,5 +34,10 @@ def blackjack():
     return render_template("blackjack.html")
 
 
+@app.route('/mastermind', methods=['GET'])
+def mastermind():
+    return render_template("mastermind.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
