@@ -1,13 +1,13 @@
 {% extends "base.html" %}
+
 {% block title %}2048{% endblock %}
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/2048.css') }}">{% endblock %}
-{% block header_title %}2048{% endblock %}
+{% block game %}2048{% endblock %}
 {% block content %}
     <div id="main">
-        <canvas id="game" width="500" height="500"></canvas>
+        <canvas id="board" width="500" height="500"></canvas>
     </div>
 {% endblock %}
 {% block js %}
-    <script src="{{ url_for('static', filename='js/2048.js') }}"></script>{% endblock %}{% endblock %}
-
+    <script src="{{ url_for('static', filename='js/2048.js') }}"></script>{% endblock %}

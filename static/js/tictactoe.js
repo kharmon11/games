@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -103,17 +103,18 @@ exports.displayScores = displayScores;
 
 /***/ }),
 /* 2 */,
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _drawBoard = __webpack_require__(4);
+var _drawBoard = __webpack_require__(5);
 
 var _displayScores = __webpack_require__(1);
 
-var _game = __webpack_require__(5);
+var _game = __webpack_require__(6);
 
 var _game2 = _interopRequireDefault(_game);
 
@@ -141,7 +142,7 @@ function restartGame(event) {
 document.getElementById("restart_btn").addEventListener("click", restartGame);
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -167,7 +168,7 @@ var drawBoard = function drawBoard(boardCanvas, ctx) {
 exports.drawBoard = drawBoard;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -183,7 +184,7 @@ var _randInt = __webpack_require__(0);
 
 var _displayScores = __webpack_require__(1);
 
-var _wins = __webpack_require__(6);
+var _wins = __webpack_require__(7);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -522,7 +523,7 @@ var TicTacToe = function () {
 exports.default = TicTacToe;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

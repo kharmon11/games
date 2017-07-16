@@ -87,7 +87,20 @@
     fill: #0f0;
 }
 
-#2048_image {
+#twenty_img a {
+    text-decoration: none;
+}
+
+#twenty_image {
     background-color: #fb0;
     display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+#twenty_text {
+    color: #fff;
+    font-size: 30px;
+    margin: auto;
 }
