@@ -76,7 +76,9 @@
 "use strict";
 
 
-var _game = __webpack_require__(7);
+var _preloadCards = __webpack_require__(7);
+
+var _game = __webpack_require__(8);
 
 var _game2 = _interopRequireDefault(_game);
 
@@ -107,8 +109,44 @@ function deal() {
 }
 dealBtn.addEventListener('click', deal);
 
+(0, _preloadCards.preloadCards)();
+
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var preloadCards = function preloadCards() {
+    var ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+    var suits = ["c", "s", "d", "h"];
+    var dir = "static/img/cards/";
+    var i = void 0,
+        j = void 0,
+        rank = void 0;
+    for (i = 0; i < ranks.length; i++) {
+        if (ranks[i] < 10) {
+            rank = "0" + ranks[i];
+        } else {
+            rank = ranks[i];
+        }
+        for (j = 0; j < suits.length; j++) {
+            var cardImage = new Image();
+            cardImage.src = dir + suits[j] + rank + ".bmp";
+        }
+    }
+    var extraCards = new Image();
+    extraCards.src = 'static/img/cards/b1fv.bmp';
+    extraCards.src = 'static/img/cards/b1pl.bmp';
+};
+exports.preloadCards = preloadCards;
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -120,11 +158,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _deck = __webpack_require__(8);
+var _deck = __webpack_require__(9);
 
 var _deck2 = _interopRequireDefault(_deck);
 
-var _hand = __webpack_require__(10);
+var _hand = __webpack_require__(11);
 
 var _hand2 = _interopRequireDefault(_hand);
 
@@ -216,12 +254,9 @@ var Game = function () {
         value: function hit() {
             var _this2 = this;
 
-            console.log("hit");
             this.addCard(this.playerHand, this.deck.cards[this.deckSpot]).then(function () {
-                console.log("add");
                 return _this2.playerHand.calcScore();
             }).then(function () {
-                console.log(_this2.playerHand.score);
                 _this2.displayScore();
                 var playerCards = document.getElementById("player_cards");
                 var hand = _this2.playerHand.cards;
@@ -331,7 +366,7 @@ var Game = function () {
 exports.default = Game;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -343,7 +378,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _card = __webpack_require__(9);
+var _card = __webpack_require__(10);
 
 var _card2 = _interopRequireDefault(_card);
 
@@ -388,7 +423,7 @@ var Deck = function () {
 exports.default = Deck;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -416,7 +451,7 @@ var Card = function Card(rank, suit) {
 exports.default = Card;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

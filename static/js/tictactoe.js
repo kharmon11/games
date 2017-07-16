@@ -123,23 +123,12 @@ var ctx = boardCanvas.getContext("2d");
 (0, _drawBoard.drawBoard)(boardCanvas, ctx);
 
 if (typeof Storage !== "undefined") {
-    if (localStorage.record) {
-        if (localStorage.wins) {
-            localStorage.setItem("tictactoeWins", localStorage.wins);
-            localStorage.setItem("tictactoeLosses", localStorage.losses);
-            localStorage.setItem("tictactoeDraws", localStorage.draws);
-            localStorage.removeItem("wins");
-            localStorage.removeItem("losses");
-            localStorage.removeItem("draws");
-        }
-        (0, _displayScores.displayScores)();
-    } else {
-        localStorage.record = true;
+    if (!localStorage.tictactoeWins) {
         localStorage.setItem("tictactoeWins", 0);
         localStorage.setItem("tictactoeLosses", 0);
         localStorage.setItem("tictactoeDraws", 0);
-        (0, _displayScores.displayScores)();
     }
+    (0, _displayScores.displayScores)();
 }
 
 var game = new _game2.default(boardCanvas, ctx);
@@ -473,15 +462,15 @@ var TicTacToe = function () {
             if (winner === 0) {
                 message.innerHTML = 'Draw!';
                 message.className = "message-draw";
-                localStorage.draws++;
+                localStorage.tictactoeDraws++;
             } else if (winner === 1) {
                 message.innerHTML = 'You Win!';
                 message.className = "message-win";
-                localStorage.wins++;
+                localStorage.tictactoeWins++;
             } else {
                 message.innerHTML = 'You Lose!';
                 message.className = "message-loss";
-                localStorage.losses++;
+                localStorage.tictactoeLosses++;
             }
             (0, _displayScores.displayScores)();
             this.canvas.removeEventListener("click", this.click);

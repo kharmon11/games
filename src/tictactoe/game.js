@@ -255,15 +255,15 @@ class TicTacToe {
         if (winner === 0) {
             message.innerHTML = 'Draw!';
             message.className = "message-draw";
-            localStorage.draws++;
+            localStorage.tictactoeDraws++;
         } else if (winner === 1) {
             message.innerHTML = 'You Win!';
             message.className = "message-win";
-            localStorage.wins++;
+            localStorage.tictactoeWins++;
         } else {
             message.innerHTML = 'You Lose!';
             message.className = "message-loss";
-            localStorage.losses++;
+            localStorage.tictactoeLosses++;
         }
         displayScores();
         this.canvas.removeEventListener("click", this.click);
