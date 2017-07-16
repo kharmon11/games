@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,15 +70,16 @@
 /* 3 */,
 /* 4 */,
 /* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _preloadCards = __webpack_require__(7);
+var _preloadCards = __webpack_require__(8);
 
-var _game = __webpack_require__(8);
+var _game = __webpack_require__(9);
 
 var _game2 = _interopRequireDefault(_game);
 
@@ -112,7 +113,7 @@ dealBtn.addEventListener('click', deal);
 (0, _preloadCards.preloadCards)();
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -146,7 +147,7 @@ var preloadCards = function preloadCards() {
 exports.preloadCards = preloadCards;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -158,11 +159,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _deck = __webpack_require__(9);
+var _deck = __webpack_require__(10);
 
 var _deck2 = _interopRequireDefault(_deck);
 
-var _hand = __webpack_require__(11);
+var _hand = __webpack_require__(12);
 
 var _hand2 = _interopRequireDefault(_hand);
 
@@ -366,7 +367,7 @@ var Game = function () {
 exports.default = Game;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -378,7 +379,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _card = __webpack_require__(10);
+var _card = __webpack_require__(11);
 
 var _card2 = _interopRequireDefault(_card);
 
@@ -423,7 +424,7 @@ var Deck = function () {
 exports.default = Deck;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -451,7 +452,7 @@ var Card = function Card(rank, suit) {
 exports.default = Card;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

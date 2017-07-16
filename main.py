@@ -39,5 +39,10 @@ def mastermind():
     return render_template("mastermind.html")
 
 
+@app.route('/2048', methods=['GET'])
+def mastermind():
+    return render_template("2048.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
