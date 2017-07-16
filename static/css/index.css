@@ -86,3 +86,8 @@
 #green-peg {
     fill: #0f0;
 }
+
+#2048_image {
+    background-color: #fb0;
+    display: flex;
+}

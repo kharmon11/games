@@ -38,7 +38,7 @@
                 <a href="{{ url_for('blackjack') }}">BlackJack</a>
             </div>
         </div>
-        <div class="game-link" viewBox="0 0 100 100" class="icon tictactoe" role="img">
+        <div class="game-link" viewBox="0 0 100 100" role="img">
             <div>
                 <a href="{{ url_for('mastermind') }}">
                     <svg class="icon">
@@ -58,6 +58,18 @@
             </div>
             <div class="center-text">
                 <a href="{{ url_for('mastermind') }}">MasterMind</a>
+            </div>
+        </div>
+        <div class="game-link">
+            <div id="2048_img" class="icon">
+                <a href="{{ url_for('2048') }}">
+                    <div id="2048_image">
+                        <div id="2048_text">2048</div>
+                    </div>
+                </a>
+            </div>
+            <div class="center-text">
+                <a href="{{ url_for('2048') }}">2048</a>
             </div>
         </div>
     </div>
