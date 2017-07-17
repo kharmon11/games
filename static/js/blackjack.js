@@ -102,7 +102,7 @@ function deal() {
         document.getElementById('dealer_score').innerHTML = "";
         document.getElementById('game_result').innerHTML = "";
         document.getElementById('dealer_cards').innerHTML = "<div id='dealer_card1' class='dealer-card-div card-div'></div>" + "<div id='dealer_card2' class='dealer-card-div card-div'></div>";
-        document.getElementById('player_cards').innerHTML = "<div id='player_running_score' class='yellow-font'></div>" + "<div id='player_card1' class='player-card-div card-div'>" + "</div> <div id='player_card2' class='player-card-div card-div'></div>";
+        document.getElementById('player_cards').innerHTML = "<div id='player_card1' class='player-card-div card-div'>" + "</div> <div id='player_card2' class='player-card-div card-div'></div>";
     }
     var game = new _game2.default();
     game.start();
@@ -291,7 +291,7 @@ var Game = function () {
 
             var dealerCards = document.getElementById("dealer_cards");
             var hand = this.dealerHand.cards;
-            dealerCards.innerHTML = "<div class='player-card-div card-div'>" + this.cardImageElement(hand[0]) + "</div><div class='player-card-div card-div'>" + this.cardImageElement(hand[1]) + "</div>";
+            dealerCards.innerHTML = "<div class='dealer-card-div card-div'>" + this.cardImageElement(hand[0]) + "</div><div class='dealer-card-div card-div'>" + this.cardImageElement(hand[1]) + "</div>";
             if (this.dealerHand.score < 17 || this.dealerHand.score === 17 && this.aces > 0) {
                 this.dealerHit(dealerCards).then(function (result) {
                     if (result === "safe") {
@@ -312,7 +312,7 @@ var Game = function () {
             return new Promise(function (resolve, reject) {
                 _this5.addCard(_this5.dealerHand, _this5.deck.cards[_this5.deckSpot]).then(function () {
                     _this5.deckSpot++;
-                    dealerCards.innerHTML += "<div class='player-card-div card-div'>" + _this5.cardImageElement(_this5.dealerHand.cards[_this5.dealerHand.cards.length - 1]) + "</div>";
+                    dealerCards.innerHTML += "<div class='dealer-card-div card-div'>" + _this5.cardImageElement(_this5.dealerHand.cards[_this5.dealerHand.cards.length - 1]) + "</div>";
                     _this5.dealerHand.calcScore().then(function () {
                         if (_this5.dealerHand.score < 17) {
                             _this5.dealerHit(dealerCards).then(function (result) {

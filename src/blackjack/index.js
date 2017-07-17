@@ -22,8 +22,7 @@ function deal() {
         document.getElementById('dealer_cards').innerHTML =
             "<div id='dealer_card1' class='dealer-card-div card-div'></div>" +
             "<div id='dealer_card2' class='dealer-card-div card-div'></div>";
-        document.getElementById('player_cards').innerHTML = "<div id='player_running_score' class='yellow-font'></div>" +
-            "<div id='player_card1' class='player-card-div card-div'>" +
+        document.getElementById('player_cards').innerHTML = "<div id='player_card1' class='player-card-div card-div'>" +
             "</div> <div id='player_card2' class='player-card-div card-div'></div>";
     }
     let game = new Game();

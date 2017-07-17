@@ -1,46 +1,32 @@
 .table-section {
     margin: auto;
-    min-height: 125px;
-}
-
-.dealer-side-div {
-    display: inline-block;
-    width: 40%;
-}
-
-.dealer-card-div {
-    display: inline-block;
-    margin: -2px;
+    min-height: 100px;
+    width: 100%;
 }
 
 .score-display {
-    display: inline-block;
-    width: 80px;
     margin: 5px;
     text-align: center;
+    flex: 1;
 }
 
 .scoreboard-titles {
     color: #fff;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .scores {
     color: #f44;
-    font-size: 30px;
-}
-
-.player-card-div {
-    display: inline-block;
+    font-size: 20px;
 }
 
 .player-console-btn {
     background-color: #7a7;
     color: #fff;
-    display: none;
     font-size: 20px;
     padding: 5px 10px 5px 10px;
     border: 3px solid #000;
+    flex: 1;
 
 }
 
@@ -69,29 +55,38 @@
 }
 
 #dealer_side {
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 #dealer_row {
-    width: 70%;
-    margin-left: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+}
+
+#deck {
+    flex: 2;
 }
 
 #dealer_score {
     font-size: 30px;
-    display: inline-block;
-    position: relative;
-    top: -50px;
-    margin-right: 50px;
+    flex: 1;
 }
 
 #dealer_cards {
-    margin-left: 70px;
+    flex: 5;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#table_center {
+    display: flex;
 }
 
 #deal_btn {
     background-color: #00f;
     color: #fff;
+    flex: 2;
 }
 
 #deal_btn:hover {
@@ -100,50 +95,47 @@
 }
 
 #score_section {
-    max-width: 40%;
-    display: inline-block;
+    flex: 2;
 }
 
 #score_title {
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
     text-align: center;
-    border-bottom: 10px solid #000;
+    border-bottom: 5px solid #000;
 }
 
 #scoreboard {
     background-color: #000;
-    width: 300px;
-    height: 100px;
-    border: 10px groove #aaa;
+    border: 5px groove #aaa;
     border-radius: 5px;
-    margin: auto;
+    display: flex;
 }
 
 #game_result {
-    font-size: 40px;
-    text-align: center;
-    display: inline-block;
+    font-size: 20px;
+    margin: auto;
+    flex: 1;
+}
+
+#player_side {
+    display: flex;
 }
 
 #player_cards {
-    display: block;
-    max-width: 65%;
-    margin-left: auto;
+    flex: 5;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: scroll;
 }
 
 #player_running_score {
     font-size: 30px;
-    display: inline-block;
-    position: relative;
-    top: -50px;
-    margin-right: 50px;
+    flex: 1;
 }
 
-#player_console_btn_wrapper {
-    width: 800px;
-    text-align: center;
-    margin: auto;
+#player_console {
+    display: flex;
 }
 
 #restart_btn {
@@ -151,4 +143,60 @@
     color: #fff;
     display: none;
     margin-left: 100px;
+}
+
+@media screen and (min-width: 500px) {
+    .table-section {
+        min-height: 125px;
+    }
+
+    .score-display {
+        display: inline-block;
+        width: 80px;
+        margin: 5px;
+        text-align: center;
+    }
+
+    .scoreboard-titles {
+        color: #fff;
+        font-size: 20px;
+    }
+
+    .scores {
+        color: #f44;
+        font-size: 30px;
+    }
+
+    #dealer_row {
+        overflow-x: visible;
+    }
+
+    #score_section {
+        max-width: 350px;
+        display: inline-block;
+    }
+
+    #score_title {
+        font-size: 30px;
+        font-weight: 700;
+        text-align: center;
+        border-bottom: 10px solid #000;
+    }
+
+    #scoreboard {
+        background-color: #000;
+        width: 300px;
+        height: 100px;
+        border: 10px groove #aaa;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    #player_cards {
+        overflow-x: auto;
+    }
+
+    #player_running_score {
+        text-align: center;
+    }
 }
