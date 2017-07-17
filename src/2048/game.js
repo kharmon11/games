@@ -11,7 +11,11 @@ class Game {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
-        this.board = [[], [], [], []]
+        this.board = [
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null]]
 
         this.renderBoard = this.renderBoard.bind(this);
         this.renderBackground = this.renderBackground.bind(this);
@@ -21,7 +25,8 @@ class Game {
         this.startingTiles = this.startingTiles.bind(this);
         this.drawBoard = this.drawBoard.bind(this);
         this.drawTile = this.drawTile.bind(this);
-
+        this.keyPress = this.keyPress.bind(this);
+        this.tileSlide = this.tileSlide.bind(this);
     }
 
     renderBoard() {
@@ -45,7 +50,7 @@ class Game {
             this.ctx.fillStyle = "#66d";
             for (let i = 0; i < 4; i++) {
                 for (let j = 0; j < 4; j++) {
-                    this.board[i].push(0);
+                    this.board[i][j] = 0;
                     this.ctx.fillRect((10 + (i * 125)), (10 + (j * 125)), 105, 105);
                 }
             }
@@ -125,7 +130,31 @@ class Game {
     keyPress(event) {
         const key = event.keyCode;
         if (key > 36 && key < 41) {
-            console.log(key,arrowKeys[key]);
+            console.log(key, arrowKeys[key]);
+            this.tileSlide(key);
+        }
+    }
+
+    tileSlide(key) {
+        if (key === 37) {
+            for (let i = 0; i < 4; i++) {
+                for (let j = 1; j < 4; j++) {
+                    if (this.board[i][j] > 0) {
+                        for (let k = 1; k > j + 1; k++) {
+                            if (this.board[i][j - k] > 0) {
+                                if (this.board[i][j - k] === this.board[i][j]) {
+                                    this.board[i][j - k] *= 2;
+                                    this.board[i][j] = 0;
+                                } else {
+                                    this.board[i][j - k] *= this.board[i][j];
+                                    this.board[i][j] = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            console.log(this.board);
         }
     }
 
