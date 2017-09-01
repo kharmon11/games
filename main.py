@@ -39,7 +39,7 @@ def mastermind():
     return render_template("mastermind.html")
 
 
-@app.route('/twenty', methods=['GET'])
+@app.route('/2048', methods=['GET'])
 def twenty():
     return render_template("2048.html")
 

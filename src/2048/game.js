@@ -1,6 +1,5 @@
+import blankBoard from './blankBoard';
 import {randInt} from '../utils/randInt';
-// import {hexToDec, decToHex} from '../utils/hexadecimalCalc';
-
 
 const arrowKeys = {
     "37": "left",
@@ -13,13 +12,8 @@ class Game {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
-        this.board = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]]
+        this.board = JSON.parse(localStorage.getItem("state2048"));
 
-        this.logBoard = this.logBoard.bind(this);
         this.renderBoard = this.renderBoard.bind(this);
         this.renderBackground = this.renderBackground.bind(this);
         this.renderBlankTitles = this.renderBlankTitles.bind(this);
@@ -34,6 +28,7 @@ class Game {
         this.rightSlide = this.rightSlide.bind(this);
         this.upSlide = this.upSlide.bind(this);
         this.downSlide = this.downSlide.bind(this);
+        this.scoreManager = this.scoreManager.bind(this);
         this.gameOverTest = this.gameOverTest.bind(this);
     }
 
@@ -67,6 +62,7 @@ class Game {
 
     start() {
         this.startingTiles().then(() => {
+            document.getElementById("current_score_number").innerHTML = localStorage.getItem("currentScore2048");
             this.drawBoard();
         })
     }
@@ -131,7 +127,7 @@ class Game {
     drawTile(i, j, num) {
         const colors = {
             2: "#ccf",
-            4: "#88f",
+            4: "#59f",
             8: "#00f",
             16: "#9f9",
             32: "#0f0",
@@ -150,14 +146,24 @@ class Game {
     }
 
     drawTileNumber(i, j, num) {
-        const darkTextColor = [2,4,16,128,256]
+        const darkTextColor = [2,4,16,32,128,256]
         this.ctx.beginPath();
         if (darkTextColor.includes(num)) {
             this.ctx.fillStyle = "#003";
         } else {
             this.ctx.fillStyle = "#ccf";
         }
-        this.ctx.font = "80px Verdana";
+        let fontSize;
+        if (num < 10) {
+            fontSize = "80";
+        } else if (num >= 10 && num < 100) {
+            fontSize = "60";
+        } else if (num >= 100 && num < 1000) {
+            fontSize = "40";
+        } else if (num >= 1000) {
+            fontSize = "20";
+        }
+        this.ctx.font = fontSize + "px Verdana";
         this.ctx.textAlign = "center";
         this.ctx.textBaseline = "middle";
         this.ctx.fillText(num, 60 + (i * 125), 60 + (j * 125));
@@ -169,7 +175,11 @@ class Game {
                 this.gameOverTest().then((result) => {
                     if (result) {
                         alert("Game Over!");
+                        window.removeEventListener('keydown', this.keyPress);
+                        localStorage.setItem("currentScore2048", 0);
+                        localStorage.setItem("state2048", JSON.stringify(blankBoard));
                     } else {
+                        localStorage.setItem("state2048", JSON.stringify(this.board));
                         this.renderBlankTitles().then(() => {
                             return this.generateTile();
                         }).then((tile) => {
@@ -181,14 +191,6 @@ class Game {
                 });
             });
         }
-    }
-
-    logBoard() {
-        console.log(this.board[0][0], this.board[1][0], this.board[2][0], this.board[3][0]);
-        console.log(this.board[1][0], this.board[1][1], this.board[2][1], this.board[3][1]);
-        console.log(this.board[2][0], this.board[1][2], this.board[2][2], this.board[3][2]);
-        console.log(this.board[3][0], this.board[1][3], this.board[2][3], this.board[3][3]);
-        console.log("-------------------------------");
     }
 
     tileSlide(key) {
@@ -225,15 +227,10 @@ class Game {
                             if (this.board[k][row] === 0) {
                                 this.board[k][row] = spaceValue;
                                 this.board[k+1][row] = 0;
-                                // for (let m = col; m > k; m--) {
-                                //     this.board[m][row] = 0;
-                                // }
                             } else if (this.board[k][row] === spaceValue) {
                                 this.board[k][row] = spaceValue * 2;
                                 this.board[k+1][row] = 0;
-                                // for (let m = col; m > k; m--) {
-                                //     this.board[m][row] = 0;
-                                // }
+                                this.scoreManager(spaceValue * 2);
                             } else {
                                 break;
                             }
@@ -261,6 +258,7 @@ class Game {
                             } else if (this.board[k][row] === spaceValue) {
                                 this.board[k][row] = spaceValue * 2;
                                 this.board[k-1][row] = 0;
+                                this.scoreManager(spaceValue * 2);
                             } else {
                                 break;
                             }
@@ -288,6 +286,35 @@ class Game {
                             } else if (this.board[col][k] === spaceValue) {
                                 this.board[col][k] = spaceValue * 2;
                                 this.board[col][k+1] = 0;
+                                this.scoreManager(spaceValue * 2);
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (col === 3) {
+                    resolve();
+                }
+            }
+        });
+    }
+// 32 darken text. 128 shrink text.
+    downSlide() {
+        return new Promise((resolve, reject) => {
+            let spaceValue;
+            for (let col=0; col<4; col++) {
+                for (let row=2; row>-1; row--) {
+                    if (this.board[col][row] > 0) {
+                        spaceValue = this.board[col][row];
+                        for (let k=row+1; k<4; k++) {
+                            if (this.board[col][k] === 0) {
+                                this.board[col][k] = spaceValue;
+                                this.board[col][k-1] = 0;
+                            } else if (this.board[col][k] === spaceValue) {
+                                this.board[col][k] = spaceValue * 2;
+                                this.board[col][k-1] = 0;
+                                this.scoreManager(spaceValue * 2);
                             } else {
                                 break;
                             }
@@ -301,8 +328,13 @@ class Game {
         });
     }
 
-    downSlide() {
-
+    scoreManager(num) {
+        localStorage.setItem("currentScore2048", parseInt(localStorage.currentScore2048) + num);
+        document.getElementById("current_score_number").innerHTML = localStorage.getItem("currentScore2048");
+        if (localStorage.getItem("currentScore2048") > Number(localStorage.getItem("highScore2048"))) {
+            localStorage.setItem("highScore2048",localStorage.currentScore2048);
+            document.getElementById("high_score_number").innerHTML = localStorage.getItem("highScore2048");
+        }
     }
 
     gameOverTest() {

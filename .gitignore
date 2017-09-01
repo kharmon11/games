@@ -156,6 +156,7 @@ typings/
 .env
 
 ### VisualStudioCode template
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

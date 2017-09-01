@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -84,29 +84,69 @@ var randInt = function randInt(min, max) {
 exports.randInt = randInt;
 
 /***/ }),
-/* 1 */,
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _game = __webpack_require__(3);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var blankBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+
+exports.default = blankBoard;
+
+/***/ }),
+/* 2 */,
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _game = __webpack_require__(4);
 
 var _game2 = _interopRequireDefault(_game);
+
+var _blankBoard = __webpack_require__(1);
+
+var _blankBoard2 = _interopRequireDefault(_blankBoard);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var board = document.getElementById('board');
 var ctx = board.getContext('2d');
 
+// Setup score
+var highScoreDiv = document.getElementById("high_score_number");
+if (localStorage.highScore2048) {
+    highScoreDiv.innerHTML = localStorage.highScore2048;
+} else {
+    localStorage.setItem("highScore2048", 0);
+    highScoreDiv.innerHTML = 0;
+}
+
+if (!localStorage.state2048) {
+    localStorage.state2048 = JSON.stringify(_blankBoard2.default);
+}
+
 var game = new _game2.default(board, ctx);
 game.renderBoard();
 
 window.addEventListener('keydown', game.keyPress);
 
+function newGame() {
+    localStorage.setItem("currentScore2048", 0);
+    localStorage.setItem("state2048", JSON.stringify(_blankBoard2.default));
+    var newGame = new _game2.default(board, ctx);
+    newGame.renderBoard();
+    window.addEventListener('keydown', newGame.keyPress);
+}
+document.getElementById("new_game_btn").addEventListener("click", newGame);
+
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -118,12 +158,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _blankBoard = __webpack_require__(1);
+
+var _blankBoard2 = _interopRequireDefault(_blankBoard);
+
 var _randInt = __webpack_require__(0);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// import {hexToDec, decToHex} from '../utils/hexadecimalCalc';
-
 
 var arrowKeys = {
     "37": "left",
@@ -138,9 +181,8 @@ var Game = function () {
 
         this.canvas = canvas;
         this.ctx = ctx;
-        this.board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        this.board = JSON.parse(localStorage.getItem("state2048"));
 
-        this.logBoard = this.logBoard.bind(this);
         this.renderBoard = this.renderBoard.bind(this);
         this.renderBackground = this.renderBackground.bind(this);
         this.renderBlankTitles = this.renderBlankTitles.bind(this);
@@ -155,11 +197,12 @@ var Game = function () {
         this.rightSlide = this.rightSlide.bind(this);
         this.upSlide = this.upSlide.bind(this);
         this.downSlide = this.downSlide.bind(this);
+        this.scoreManager = this.scoreManager.bind(this);
         this.gameOverTest = this.gameOverTest.bind(this);
     }
 
     _createClass(Game, [{
-        key: "renderBoard",
+        key: 'renderBoard',
         value: function renderBoard() {
             var _this = this;
 
@@ -170,7 +213,7 @@ var Game = function () {
             });
         }
     }, {
-        key: "renderBackground",
+        key: 'renderBackground',
         value: function renderBackground() {
             var _this2 = this;
 
@@ -181,7 +224,7 @@ var Game = function () {
             });
         }
     }, {
-        key: "renderBlankTitles",
+        key: 'renderBlankTitles',
         value: function renderBlankTitles() {
             var _this3 = this;
 
@@ -196,16 +239,17 @@ var Game = function () {
             });
         }
     }, {
-        key: "start",
+        key: 'start',
         value: function start() {
             var _this4 = this;
 
             this.startingTiles().then(function () {
+                document.getElementById("current_score_number").innerHTML = localStorage.getItem("currentScore2048");
                 _this4.drawBoard();
             });
         }
     }, {
-        key: "generateTile",
+        key: 'generateTile',
         value: function generateTile() {
             var _this5 = this;
 
@@ -221,7 +265,7 @@ var Game = function () {
             });
         }
     }, {
-        key: "startingTiles",
+        key: 'startingTiles',
         value: function startingTiles() {
             var _this6 = this;
 
@@ -244,7 +288,7 @@ var Game = function () {
             });
         }
     }, {
-        key: "addTileToBoard",
+        key: 'addTileToBoard',
         value: function addTileToBoard(tile) {
             var _this7 = this;
 
@@ -258,7 +302,7 @@ var Game = function () {
             });
         }
     }, {
-        key: "drawBoard",
+        key: 'drawBoard',
         value: function drawBoard() {
             var _this8 = this;
 
@@ -282,13 +326,13 @@ var Game = function () {
             }
         }
     }, {
-        key: "drawTile",
+        key: 'drawTile',
         value: function drawTile(i, j, num) {
             var _this9 = this;
 
             var colors = {
                 2: "#ccf",
-                4: "#88f",
+                4: "#59f",
                 8: "#00f",
                 16: "#9f9",
                 32: "#0f0",
@@ -306,22 +350,32 @@ var Game = function () {
             });
         }
     }, {
-        key: "drawTileNumber",
+        key: 'drawTileNumber',
         value: function drawTileNumber(i, j, num) {
-            var darkTextColor = [2, 4, 16, 128, 256];
+            var darkTextColor = [2, 4, 16, 32, 128, 256];
             this.ctx.beginPath();
             if (darkTextColor.includes(num)) {
                 this.ctx.fillStyle = "#003";
             } else {
                 this.ctx.fillStyle = "#ccf";
             }
-            this.ctx.font = "80px Verdana";
+            var fontSize = void 0;
+            if (num < 10) {
+                fontSize = "80";
+            } else if (num >= 10 && num < 100) {
+                fontSize = "60";
+            } else if (num >= 100 && num < 1000) {
+                fontSize = "40";
+            } else if (num >= 1000) {
+                fontSize = "20";
+            }
+            this.ctx.font = fontSize + "px Verdana";
             this.ctx.textAlign = "center";
             this.ctx.textBaseline = "middle";
             this.ctx.fillText(num, 60 + i * 125, 60 + j * 125);
         }
     }, {
-        key: "keyPress",
+        key: 'keyPress',
         value: function keyPress(event) {
             var _this10 = this;
 
@@ -330,7 +384,11 @@ var Game = function () {
                     _this10.gameOverTest().then(function (result) {
                         if (result) {
                             alert("Game Over!");
+                            window.removeEventListener('keydown', _this10.keyPress);
+                            localStorage.setItem("currentScore2048", 0);
+                            localStorage.setItem("state2048", JSON.stringify(_blankBoard2.default));
                         } else {
+                            localStorage.setItem("state2048", JSON.stringify(_this10.board));
                             _this10.renderBlankTitles().then(function () {
                                 return _this10.generateTile();
                             }).then(function (tile) {
@@ -344,16 +402,7 @@ var Game = function () {
             }
         }
     }, {
-        key: "logBoard",
-        value: function logBoard() {
-            console.log(this.board[0][0], this.board[1][0], this.board[2][0], this.board[3][0]);
-            console.log(this.board[1][0], this.board[1][1], this.board[2][1], this.board[3][1]);
-            console.log(this.board[2][0], this.board[1][2], this.board[2][2], this.board[3][2]);
-            console.log(this.board[3][0], this.board[1][3], this.board[2][3], this.board[3][3]);
-            console.log("-------------------------------");
-        }
-    }, {
-        key: "tileSlide",
+        key: 'tileSlide',
         value: function tileSlide(key) {
             var _this11 = this;
 
@@ -378,7 +427,7 @@ var Game = function () {
             });
         }
     }, {
-        key: "leftSlide",
+        key: 'leftSlide',
         value: function leftSlide() {
             var _this12 = this;
 
@@ -392,15 +441,10 @@ var Game = function () {
                                 if (_this12.board[k][row] === 0) {
                                     _this12.board[k][row] = spaceValue;
                                     _this12.board[k + 1][row] = 0;
-                                    // for (let m = col; m > k; m--) {
-                                    //     this.board[m][row] = 0;
-                                    // }
                                 } else if (_this12.board[k][row] === spaceValue) {
                                     _this12.board[k][row] = spaceValue * 2;
                                     _this12.board[k + 1][row] = 0;
-                                    // for (let m = col; m > k; m--) {
-                                    //     this.board[m][row] = 0;
-                                    // }
+                                    _this12.scoreManager(spaceValue * 2);
                                 } else {
                                     break;
                                 }
@@ -414,7 +458,7 @@ var Game = function () {
             });
         }
     }, {
-        key: "rightSlide",
+        key: 'rightSlide',
         value: function rightSlide() {
             var _this13 = this;
 
@@ -428,15 +472,10 @@ var Game = function () {
                                 if (_this13.board[k][row] === 0) {
                                     _this13.board[k][row] = spaceValue;
                                     _this13.board[k - 1][row] = 0;
-                                    // for (let m = col; m < k; m++) {
-                                    //     this.board[m][row] = 0;
-                                    // }
                                 } else if (_this13.board[k][row] === spaceValue) {
                                     _this13.board[k][row] = spaceValue * 2;
                                     _this13.board[k - 1][row] = 0;
-                                    // for (let m = col; m < k; m++) {
-                                    //     this.board[m][row] = 0;
-                                    // }
+                                    _this13.scoreManager(spaceValue * 2);
                                 } else {
                                     break;
                                 }
@@ -450,7 +489,7 @@ var Game = function () {
             });
         }
     }, {
-        key: "upSlide",
+        key: 'upSlide',
         value: function upSlide() {
             var _this14 = this;
 
@@ -467,6 +506,40 @@ var Game = function () {
                                 } else if (_this14.board[col][k] === spaceValue) {
                                     _this14.board[col][k] = spaceValue * 2;
                                     _this14.board[col][k + 1] = 0;
+                                    _this14.scoreManager(spaceValue * 2);
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (col === 3) {
+                        resolve();
+                    }
+                }
+            });
+        }
+        // 32 darken text. 128 shrink text.
+
+    }, {
+        key: 'downSlide',
+        value: function downSlide() {
+            var _this15 = this;
+
+            return new Promise(function (resolve, reject) {
+                var spaceValue = void 0;
+                for (var col = 0; col < 4; col++) {
+                    for (var row = 2; row > -1; row--) {
+                        if (_this15.board[col][row] > 0) {
+                            spaceValue = _this15.board[col][row];
+                            for (var k = row + 1; k < 4; k++) {
+                                if (_this15.board[col][k] === 0) {
+                                    _this15.board[col][k] = spaceValue;
+                                    _this15.board[col][k - 1] = 0;
+                                } else if (_this15.board[col][k] === spaceValue) {
+                                    _this15.board[col][k] = spaceValue * 2;
+                                    _this15.board[col][k - 1] = 0;
+                                    _this15.scoreManager(spaceValue * 2);
                                 } else {
                                     break;
                                 }
@@ -480,17 +553,24 @@ var Game = function () {
             });
         }
     }, {
-        key: "downSlide",
-        value: function downSlide() {}
+        key: 'scoreManager',
+        value: function scoreManager(num) {
+            localStorage.setItem("currentScore2048", parseInt(localStorage.currentScore2048) + num);
+            document.getElementById("current_score_number").innerHTML = localStorage.getItem("currentScore2048");
+            if (localStorage.getItem("currentScore2048") > Number(localStorage.getItem("highScore2048"))) {
+                localStorage.setItem("highScore2048", localStorage.currentScore2048);
+                document.getElementById("high_score_number").innerHTML = localStorage.getItem("highScore2048");
+            }
+        }
     }, {
-        key: "gameOverTest",
+        key: 'gameOverTest',
         value: function gameOverTest() {
-            var _this15 = this;
+            var _this16 = this;
 
             return new Promise(function (resolve, reject) {
                 for (var i = 0; i < 4; i++) {
                     for (var j = 0; j < 4; j++) {
-                        if (_this15.board[i][j] === 0) {
+                        if (_this16.board[i][j] === 0) {
                             resolve(false);
                         }
                     }
