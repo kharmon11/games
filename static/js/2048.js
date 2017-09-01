@@ -122,6 +122,9 @@ var _randInt = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// import {hexToDec, decToHex} from '../utils/hexadecimalCalc';
+
+
 var arrowKeys = {
     "37": "left",
     "38": "up",
@@ -135,8 +138,9 @@ var Game = function () {
 
         this.canvas = canvas;
         this.ctx = ctx;
-        this.board = [[null, null, null, null], [null, null, null, null], [null, null, null, null], [null, null, null, null]];
+        this.board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
 
+        this.logBoard = this.logBoard.bind(this);
         this.renderBoard = this.renderBoard.bind(this);
         this.renderBackground = this.renderBackground.bind(this);
         this.renderBlankTitles = this.renderBlankTitles.bind(this);
@@ -147,6 +151,11 @@ var Game = function () {
         this.drawTile = this.drawTile.bind(this);
         this.keyPress = this.keyPress.bind(this);
         this.tileSlide = this.tileSlide.bind(this);
+        this.leftSlide = this.leftSlide.bind(this);
+        this.rightSlide = this.rightSlide.bind(this);
+        this.upSlide = this.upSlide.bind(this);
+        this.downSlide = this.downSlide.bind(this);
+        this.gameOverTest = this.gameOverTest.bind(this);
     }
 
     _createClass(Game, [{
@@ -178,9 +187,8 @@ var Game = function () {
 
             return new Promise(function (resolve, reject) {
                 _this3.ctx.fillStyle = "#66d";
-                for (var i = 0; i < 4; i++) {
-                    for (var j = 0; j < 4; j++) {
-                        _this3.board[i][j] = 0;
+                for (var i = 0; i < _this3.board.length; i++) {
+                    for (var j = 0; j < _this3.board[i].length; j++) {
                         _this3.ctx.fillRect(10 + i * 125, 10 + j * 125, 105, 105);
                     }
                 }
@@ -219,14 +227,14 @@ var Game = function () {
 
             return new Promise(function (resolve, reject) {
                 _this6.generateTile().then(function (tile) {
-                    if ((0, _randInt.randInt)(1, 101) < 95) {
+                    if ((0, _randInt.randInt)(1, 101) < 90) {
                         _this6.board[tile[0]][tile[1]] = 2;
                     } else {
                         _this6.board[tile[0]][tile[1]] = 4;
                     }
                     return _this6.generateTile();
                 }).then(function (tile) {
-                    if ((0, _randInt.randInt)(1, 101) < 95) {
+                    if ((0, _randInt.randInt)(1, 101) < 90) {
                         _this6.board[tile[0]][tile[1]] = 2;
                     } else {
                         _this6.board[tile[0]][tile[1]] = 4;
@@ -236,16 +244,30 @@ var Game = function () {
             });
         }
     }, {
+        key: "addTileToBoard",
+        value: function addTileToBoard(tile) {
+            var _this7 = this;
+
+            return new Promise(function (resolve, reject) {
+                if ((0, _randInt.randInt)(1, 101) < 90) {
+                    _this7.board[tile[0]][tile[1]] = 2;
+                } else {
+                    _this7.board[tile[0]][tile[1]] = 4;
+                }
+                resolve();
+            });
+        }
+    }, {
         key: "drawBoard",
         value: function drawBoard() {
-            var _this7 = this;
+            var _this8 = this;
 
             var _loop = function _loop(i) {
                 var _loop2 = function _loop2(j) {
-                    if (_this7.board[i][j] > 0) {
-                        var num = _this7.board[i][j];
-                        _this7.drawTile(i, j, num).then(function () {
-                            _this7.drawTileNumber(i, j, num);
+                    if (_this8.board[i][j] > 0) {
+                        var num = _this8.board[i][j];
+                        _this8.drawTile(i, j, num).then(function () {
+                            _this8.drawTileNumber(i, j, num);
                         });
                     }
                 };
@@ -262,19 +284,37 @@ var Game = function () {
     }, {
         key: "drawTile",
         value: function drawTile(i, j, num) {
-            var _this8 = this;
+            var _this9 = this;
 
+            var colors = {
+                2: "#ccf",
+                4: "#88f",
+                8: "#00f",
+                16: "#9f9",
+                32: "#0f0",
+                64: "#0a0",
+                128: "#fcf",
+                256: "#f9f",
+                512: "#f3f",
+                1024: "#f0f",
+                2048: "#f00"
+            };
             return new Promise(function (resolve, reject) {
-                _this8.ctx.fillStyle = "#ccf";
-                _this8.ctx.fillRect(10 + i * 125, 10 + j * 125, 105, 105);
+                _this9.ctx.fillStyle = colors[num];
+                _this9.ctx.fillRect(10 + i * 125, 10 + j * 125, 105, 105);
                 resolve();
             });
         }
     }, {
         key: "drawTileNumber",
         value: function drawTileNumber(i, j, num) {
+            var darkTextColor = [2, 4, 16, 128, 256];
             this.ctx.beginPath();
-            this.ctx.fillStyle = "#003";
+            if (darkTextColor.includes(num)) {
+                this.ctx.fillStyle = "#003";
+            } else {
+                this.ctx.fillStyle = "#ccf";
+            }
             this.ctx.font = "80px Verdana";
             this.ctx.textAlign = "center";
             this.ctx.textBaseline = "middle";
@@ -283,35 +323,176 @@ var Game = function () {
     }, {
         key: "keyPress",
         value: function keyPress(event) {
-            var key = event.keyCode;
-            if (key > 36 && key < 41) {
-                console.log(key, arrowKeys[key]);
-                this.tileSlide(key);
+            var _this10 = this;
+
+            if (event.keyCode > 36 && event.keyCode < 41) {
+                this.tileSlide(event.keyCode).then(function () {
+                    _this10.gameOverTest().then(function (result) {
+                        if (result) {
+                            alert("Game Over!");
+                        } else {
+                            _this10.renderBlankTitles().then(function () {
+                                return _this10.generateTile();
+                            }).then(function (tile) {
+                                return _this10.addTileToBoard(tile);
+                            }).then(function () {
+                                _this10.drawBoard();
+                            });
+                        }
+                    });
+                });
             }
+        }
+    }, {
+        key: "logBoard",
+        value: function logBoard() {
+            console.log(this.board[0][0], this.board[1][0], this.board[2][0], this.board[3][0]);
+            console.log(this.board[1][0], this.board[1][1], this.board[2][1], this.board[3][1]);
+            console.log(this.board[2][0], this.board[1][2], this.board[2][2], this.board[3][2]);
+            console.log(this.board[3][0], this.board[1][3], this.board[2][3], this.board[3][3]);
+            console.log("-------------------------------");
         }
     }, {
         key: "tileSlide",
         value: function tileSlide(key) {
-            if (key === 37) {
-                for (var i = 0; i < 4; i++) {
-                    for (var j = 1; j < 4; j++) {
-                        if (this.board[i][j] > 0) {
-                            for (var k = 1; k > j + 1; k++) {
-                                if (this.board[i][j - k] > 0) {
-                                    if (this.board[i][j - k] === this.board[i][j]) {
-                                        this.board[i][j - k] *= 2;
-                                        this.board[i][j] = 0;
-                                    } else {
-                                        this.board[i][j - k] *= this.board[i][j];
-                                        this.board[i][j] = 0;
+            var _this11 = this;
+
+            return new Promise(function (resolve, reject) {
+                if (key === 37) {
+                    _this11.leftSlide().then(function () {
+                        resolve();
+                    });
+                } else if (key === 38) {
+                    _this11.upSlide().then(function () {
+                        resolve();
+                    });
+                } else if (key === 39) {
+                    _this11.rightSlide().then(function () {
+                        resolve();
+                    });
+                } else if (key === 40) {
+                    _this11.downSlide().then(function () {
+                        resolve();
+                    });
+                }
+            });
+        }
+    }, {
+        key: "leftSlide",
+        value: function leftSlide() {
+            var _this12 = this;
+
+            return new Promise(function (resolve, reject) {
+                var spaceValue = void 0;
+                for (var row = 0; row < 4; row++) {
+                    for (var col = 1; col < 4; col++) {
+                        if (_this12.board[col][row] > 0) {
+                            spaceValue = _this12.board[col][row];
+                            for (var k = col - 1; k > -1; k--) {
+                                if (_this12.board[k][row] === 0) {
+                                    _this12.board[k][row] = spaceValue;
+                                    for (var m = col; m > k; m--) {
+                                        _this12.board[m][row] = 0;
                                     }
+                                } else if (_this12.board[k][row] === spaceValue) {
+                                    _this12.board[k][row] = spaceValue * 2;
+                                    for (var _m = col; _m > k; _m--) {
+                                        _this12.board[_m][row] = 0;
+                                    }
+                                } else {
+                                    break;
                                 }
                             }
                         }
                     }
+                    if (row === 3) {
+                        resolve();
+                    }
                 }
-                console.log(this.board);
-            }
+            });
+        }
+    }, {
+        key: "rightSlide",
+        value: function rightSlide() {
+            var _this13 = this;
+
+            return new Promise(function (resolve, reject) {
+                var spaceValue = void 0;
+                for (var row = 0; row < 4; row++) {
+                    for (var col = 2; col > -1; col--) {
+                        if (_this13.board[col][row] > 0) {
+                            spaceValue = _this13.board[col][row];
+                            for (var k = col + 1; k < 4; k++) {
+                                if (_this13.board[k][row] === 0) {
+                                    _this13.board[k][row] = spaceValue;
+                                    for (var m = col; m < k; m++) {
+                                        _this13.board[m][row] = 0;
+                                    }
+                                } else if (_this13.board[k][row] === spaceValue) {
+                                    _this13.board[k][row] = spaceValue * 2;
+                                    for (var _m2 = col; _m2 < k; _m2++) {
+                                        _this13.board[_m2][row] = 0;
+                                    }
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (row === 3) {
+                        resolve();
+                    }
+                }
+            });
+        }
+    }, {
+        key: "upSlide",
+        value: function upSlide() {
+            var _this14 = this;
+
+            return new Promise(function (resolve, reject) {
+                var spaceValue = void 0;
+                for (var col = 0; col < 4; col++) {
+                    for (var row = 1; row < 4; row++) {
+                        if (_this14.board[col][row] > 0) {
+                            spaceValue = _this14.board[col][row];
+                            for (var k = row - 1; k > -1; k--) {
+                                if (_this14.board[col][k] === 0) {
+                                    _this14.board[col][k] = spaceValue;
+                                    _this14.board[col][k + 1] = 0;
+                                } else if (_this14.board[col][k] === spaceValue) {
+                                    _this14.board[col][k] = spaceValue * 2;
+                                    _this14.board[col][k + 1] = 0;
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (col === 3) {
+                        resolve();
+                    }
+                }
+            });
+        }
+    }, {
+        key: "downSlide",
+        value: function downSlide() {}
+    }, {
+        key: "gameOverTest",
+        value: function gameOverTest() {
+            var _this15 = this;
+
+            return new Promise(function (resolve, reject) {
+                for (var i = 0; i < 4; i++) {
+                    for (var j = 0; j < 4; j++) {
+                        if (_this15.board[i][j] === 0) {
+                            resolve(false);
+                        }
+                    }
+                }
+                resolve(true);
+            });
         }
     }]);
 

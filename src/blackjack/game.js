@@ -103,8 +103,8 @@ class Game {
     dealerTurn() {
         const dealerCards = document.getElementById("dealer_cards");
         const hand = this.dealerHand.cards;
-        dealerCards.innerHTML = "<div class='player-card-div card-div'>" + this.cardImageElement(hand[0]) +
-            "</div><div class='player-card-div card-div'>" + this.cardImageElement(hand[1]) + "</div>";
+        dealerCards.innerHTML = "<div class='dealer-card-div card-div'>" + this.cardImageElement(hand[0]) +
+            "</div><div class='dealer-card-div card-div'>" + this.cardImageElement(hand[1]) + "</div>";
         if (this.dealerHand.score < 17 || (this.dealerHand.score === 17 && this.aces > 0)) {
             this.dealerHit(dealerCards).then((result) => {
                 if (result === "safe") {
@@ -122,7 +122,7 @@ class Game {
         return new Promise((resolve, reject) => {
             this.addCard(this.dealerHand, this.deck.cards[this.deckSpot]).then(() => {
                 this.deckSpot++;
-                dealerCards.innerHTML += "<div class='player-card-div card-div'>" +
+                dealerCards.innerHTML += "<div class='dealer-card-div card-div'>" +
                     this.cardImageElement(this.dealerHand.cards[this.dealerHand.cards.length - 1]) + "</div>";
                 this.dealerHand.calcScore().then(() => {
                     if (this.dealerHand.score < 17) {
