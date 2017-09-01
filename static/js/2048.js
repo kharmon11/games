@@ -391,14 +391,16 @@ var Game = function () {
                             for (var k = col - 1; k > -1; k--) {
                                 if (_this12.board[k][row] === 0) {
                                     _this12.board[k][row] = spaceValue;
-                                    for (var m = col; m > k; m--) {
-                                        _this12.board[m][row] = 0;
-                                    }
+                                    _this12.board[k + 1][row] = 0;
+                                    // for (let m = col; m > k; m--) {
+                                    //     this.board[m][row] = 0;
+                                    // }
                                 } else if (_this12.board[k][row] === spaceValue) {
                                     _this12.board[k][row] = spaceValue * 2;
-                                    for (var _m = col; _m > k; _m--) {
-                                        _this12.board[_m][row] = 0;
-                                    }
+                                    _this12.board[k + 1][row] = 0;
+                                    // for (let m = col; m > k; m--) {
+                                    //     this.board[m][row] = 0;
+                                    // }
                                 } else {
                                     break;
                                 }
@@ -425,14 +427,16 @@ var Game = function () {
                             for (var k = col + 1; k < 4; k++) {
                                 if (_this13.board[k][row] === 0) {
                                     _this13.board[k][row] = spaceValue;
-                                    for (var m = col; m < k; m++) {
-                                        _this13.board[m][row] = 0;
-                                    }
+                                    _this13.board[k - 1][row] = 0;
+                                    // for (let m = col; m < k; m++) {
+                                    //     this.board[m][row] = 0;
+                                    // }
                                 } else if (_this13.board[k][row] === spaceValue) {
                                     _this13.board[k][row] = spaceValue * 2;
-                                    for (var _m2 = col; _m2 < k; _m2++) {
-                                        _this13.board[_m2][row] = 0;
-                                    }
+                                    _this13.board[k - 1][row] = 0;
+                                    // for (let m = col; m < k; m++) {
+                                    //     this.board[m][row] = 0;
+                                    // }
                                 } else {
                                     break;
                                 }

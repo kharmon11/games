@@ -224,14 +224,16 @@ class Game {
                         for (let k = col - 1; k > -1; k--) {
                             if (this.board[k][row] === 0) {
                                 this.board[k][row] = spaceValue;
-                                for (let m = col; m > k; m--) {
-                                    this.board[m][row] = 0;
-                                }
+                                this.board[k+1][row] = 0;
+                                // for (let m = col; m > k; m--) {
+                                //     this.board[m][row] = 0;
+                                // }
                             } else if (this.board[k][row] === spaceValue) {
                                 this.board[k][row] = spaceValue * 2;
-                                for (let m = col; m > k; m--) {
-                                    this.board[m][row] = 0;
-                                }
+                                this.board[k+1][row] = 0;
+                                // for (let m = col; m > k; m--) {
+                                //     this.board[m][row] = 0;
+                                // }
                             } else {
                                 break;
                             }
@@ -255,14 +257,10 @@ class Game {
                         for (let k = col + 1; k < 4; k++) {
                             if (this.board[k][row] === 0) {
                                 this.board[k][row] = spaceValue;
-                                for (let m = col; m < k; m++) {
-                                    this.board[m][row] = 0;
-                                }
+                                this.board[k-1][row] = 0;
                             } else if (this.board[k][row] === spaceValue) {
                                 this.board[k][row] = spaceValue * 2;
-                                for (let m = col; m < k; m++) {
-                                    this.board[m][row] = 0;
-                                }
+                                this.board[k-1][row] = 0;
                             } else {
                                 break;
                             }
