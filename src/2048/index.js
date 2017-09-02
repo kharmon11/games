@@ -13,6 +13,10 @@ if (localStorage.highScore2048) {
     highScoreDiv.innerHTML = 0;
 }
 
+if (!localStorage.currentScore2048) {
+    localStorage.setItem("currentScore2048", 0);
+}
+
 if (!localStorage.state2048) {
     localStorage.state2048 = JSON.stringify(blankBoard);
 }
