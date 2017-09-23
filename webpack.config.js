@@ -4,8 +4,7 @@ module.exports = {
     entry: {
         tictactoe: './src/tictactoe/index.js',
         blackjack: './src/blackjack/index.js',
-        mastermind: './src/mastermind/index.js',
-        "2048": './src/2048/index.js'
+        mastermind: './src/mastermind/index.js'
     },
     output: {
         filename: 'js/[name].js',
