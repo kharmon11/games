@@ -18,6 +18,7 @@ skip_files:
 - ^(.*/)?.*/RCS/.*$
 - ^(.*/)?\..*$
 - ^node_modules$
+- ^games3_.*$ # Specific python virtual environments
 
 # TODO: List any other App Engine SDK libs you may need here.
 
