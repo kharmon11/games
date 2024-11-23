@@ -4,7 +4,8 @@
   "description": "Games",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "dev-test": "~/google-cloud-sdk/bin/dev_appserver.py app.yaml"
   },
   "author": "",
   "license": "ISC",
