@@ -1,6 +1,6 @@
-# My custom ignored files
-games3_11
-games3_13
+# Virtual Environments
+/.Envs
+
 
 # Created by .ignore support plugin (hsz.mobi)
 ### macOS template

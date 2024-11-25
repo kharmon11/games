@@ -1,0 +1,11 @@
+.idea
+.vscode
+/.Envs
+/node_modules
+
+# Formerly under skip_files in app.yaml
+^(.*/)?#.*#$
+^(.*/)?.*~$
+^(.*/)?.*\.py[co]$
+^(.*/)?.*/RCS/.*$
+^(.*/)?\..*$
