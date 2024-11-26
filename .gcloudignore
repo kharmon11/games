@@ -2,6 +2,7 @@
 .vscode
 /.Envs
 /node_modules
+__pycache__
 
 # Formerly under skip_files in app.yaml
 ^(.*/)?#.*#$
