@@ -11,14 +11,6 @@ handlers:
 - url: /.*
   script: main.app
   secure: always
-#skip_files:
-#- ^(.*/)?#.*#$
-#- ^(.*/)?.*~$
-#- ^(.*/)?.*\.py[co]$
-#- ^(.*/)?.*/RCS/.*$
-#- ^(.*/)?\..*$
-#- ^node_modules$
-#- ^games3_.*$ # Specific python virtual environments
 
 # TODO: List any other App Engine SDK libs you may need here.
 
